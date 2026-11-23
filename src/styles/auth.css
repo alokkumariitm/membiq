@@ -1,0 +1,188 @@
+/* Auth & Verification Specific Styles */
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-2) 0;
+}
+
+.otp-icon-header {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-2);
+}
+
+.otp-email-highlight {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-alt);
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.otp-inputs-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+.otp-box-input {
+  width: 48px;
+  height: 56px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: center;
+  border: 2px solid var(--color-border);
+  border-radius: var(--btn-radius);
+  background-color: var(--color-bg-card);
+  color: var(--color-text-primary);
+  transition: all var(--transition-fast);
+}
+
+.otp-box-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+  outline: none;
+}
+
+.otp-single-input {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  text-align: center;
+  min-height: 54px;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--btn-radius);
+}
+
+.otp-simulation-badge {
+  background-color: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+  border-radius: var(--btn-radius);
+  padding: var(--space-3);
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-warning);
+  text-align: left;
+}
+
+.otp-simulation-badge strong {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: #92400e;
+}
+
+.otp-resend-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: var(--space-2);
+}
+
+.otp-resend-btn:disabled {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+/* Single Device Session Warning Banner */
+.session-lock-banner {
+  background-color: #fef2f2;
+  border: 2px solid #f87171;
+  border-radius: var(--card-radius);
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: shake 300ms ease;
+}
+
+@media (min-width: 640px) {
+  .session-lock-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.session-lock-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.session-lock-text h4 {
+  color: #991b1b;
+  margin: 0 0 2px 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.session-lock-text p {
+  color: #7f1d1d;
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+/* Interactive Session Simulator Box */
+.device-tester-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+  border: 2px dashed #93c5fd;
+  border-radius: var(--card-radius);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (min-width: 640px) {
+  .device-tester-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.active-device-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
