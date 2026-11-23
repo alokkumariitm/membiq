@@ -44,8 +44,8 @@ export const HomeView = ({ setActiveView }) => {
   const [authMode, setAuthMode] = useState('login');
 
   // Login form state
-  const [loginEmail, setLoginEmail] = useState('rohit@rajendranagar.com');
-  const [loginPassword, setLoginPassword] = useState('password123');
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState('');
 
@@ -69,12 +69,12 @@ export const HomeView = ({ setActiveView }) => {
     }
   }, [sessionKickedReason]);
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setLoginError('');
     setLoginSuccess('');
 
-    const res = loginOwner(loginEmail, loginPassword);
+    const res = await loginOwner(loginEmail, loginPassword);
     if (res.success) {
       const user = res.user;
       const isActive = user.planStatus === 'active' && user.expiryDate && new Date(user.expiryDate + 'T23:59:59') > new Date();
@@ -95,7 +95,7 @@ export const HomeView = ({ setActiveView }) => {
     }
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setRegError('');
 
@@ -104,7 +104,7 @@ export const HomeView = ({ setActiveView }) => {
       return;
     }
 
-    const res = startRegistration({
+    const res = await startRegistration({
       name: regName,
       libraryName: regLibraryName,
       email: regEmail,
@@ -125,12 +125,6 @@ export const HomeView = ({ setActiveView }) => {
     setTimeout(() => {
       setActiveView('plans');
     }, 700);
-  };
-
-  const handleAutoFillDemoOwner = () => {
-    setLoginEmail('rohit@rajendranagar.com');
-    setLoginPassword('password123');
-    setLoginError('');
   };
 
   const features = [
@@ -284,28 +278,6 @@ export const HomeView = ({ setActiveView }) => {
                       <Armchair size={18} />
                       <span>{currentUser.planStatus === 'active' ? 'Open Library Dashboard' : 'Renew 28-Day Plan (Dashboard Locked)'}</span>
                     </button>
-
-                    {/* Interactive Session Lock Tester */}
-                    <div className="device-tester-card">
-                      <div>
-                        <strong style={{ fontSize: '0.88rem', color: '#1e3a8a', display: 'block' }}>
-                          🧪 Test Single-Device Session Lock
-                        </strong>
-                        <span style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)' }}>
-                          Simulate what happens when you log in from Device B.
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-secondary btn-sm"
-                        style={{ borderColor: '#ef4444', color: '#b91c1c' }}
-                        onClick={() => simulateRemoteLogin(currentUser.email)}
-                        title="Simulate someone else logging in to this account on a different device"
-                      >
-                        <Laptop size={14} />
-                        <span>Simulate Device B Login</span>
-                      </button>
-                    </div>
                   </div>
                 ) : (
                   /* If NOT logged in: Show Login / Register tabs */
@@ -370,11 +342,6 @@ export const HomeView = ({ setActiveView }) => {
                     {/* Form 1: LOGIN */}
                     {authMode === 'login' && (
                       <form onSubmit={handleLoginSubmit}>
-                        <div className="auth-demo-helper">
-                          <strong>💡 One-Click Demo Credentials:</strong>
-                          Click "Auto-Fill Demo Credentials" below to populate a registered owner account instantly.
-                        </div>
-
                         <div className="form-group">
                           <label className="form-label" htmlFor="loginEmailInput">
                             Registered Email Address
@@ -385,7 +352,7 @@ export const HomeView = ({ setActiveView }) => {
                             className="form-input"
                             value={loginEmail}
                             onChange={(e) => setLoginEmail(e.target.value)}
-                            placeholder="e.g., rohit@rajendranagar.com"
+                            placeholder="Enter your registered email"
                             required
                           />
                         </div>
@@ -414,19 +381,10 @@ export const HomeView = ({ setActiveView }) => {
                           />
                         </div>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '16px' }}>
+                        <div style={{ marginTop: '20px' }}>
                           <button type="submit" className="btn btn-primary btn-block btn-lg">
                             <LogIn size={20} />
-                            <span>Sign In (Single-Device Lock)</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            className="btn btn-secondary btn-block"
-                            onClick={handleAutoFillDemoOwner}
-                          >
-                            <Sparkles size={16} color="var(--color-primary)" />
-                            <span>Auto-Fill Demo Credentials</span>
+                            <span>Sign In</span>
                           </button>
                         </div>
                       </form>

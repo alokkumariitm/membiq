@@ -16,100 +16,23 @@ const getPastDate = (days) => {
   return new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 };
 
-// Initial pre-registered library owners for membiQ
-const INITIAL_OWNERS = [
-  {
-    id: 'owner-1',
-    name: 'Rohit Verma',
-    libraryName: 'Rajendra Nagar Aspirants Hub',
-    email: 'rohit@rajendranagar.com',
-    phone: '9811223344',
-    password: 'password123',
-    plan: 'Enterprise Elite',
-    planPrice: 499,
-    planStatus: 'active', // 'active' | 'expired' | 'unpaid'
-    expiryDate: getFutureDate(18), // 18 days remaining in 28-day cycle
-    billingCycleDays: 28,
-    activeSessionToken: null,
-    activeDeviceName: null,
-    registeredAt: '2026-01-10',
-  },
-  {
-    id: 'owner-2',
-    name: 'Alok Ranjan',
-    libraryName: 'Kankarbagh Self-Study Center',
-    email: 'alok@kankarbagh.com',
-    phone: '9431098765',
-    password: 'password123',
-    plan: 'Pro Growth',
-    planPrice: 199,
-    planStatus: 'expired', // Expired 28-day cycle -> Must renew!
-    expiryDate: getPastDate(2),
-    billingCycleDays: 28,
-    activeSessionToken: null,
-    activeDeviceName: null,
-    registeredAt: '2026-03-14',
-  },
-  {
-    id: 'owner-3',
-    name: 'Suresh Mittal',
-    libraryName: 'Kota IIT/NEET Study Hub',
-    email: 'suresh@kotastudy.com',
-    phone: '9829012345',
-    password: 'password123',
-    plan: 'Enterprise Elite',
-    planPrice: 499,
-    planStatus: 'active',
-    expiryDate: getFutureDate(24),
-    billingCycleDays: 28,
-    activeSessionToken: null,
-    activeDeviceName: null,
-    registeredAt: '2025-11-01',
-  },
-  {
-    id: 'owner-4',
-    name: 'Vikas Dubey',
-    libraryName: 'Hazratganj Quiet Study Hall',
-    email: 'vikas@hazratganj.com',
-    phone: '9792045678',
-    password: 'password123',
-    plan: 'Pro Growth',
-    planPrice: 199,
-    planStatus: 'active',
-    expiryDate: getFutureDate(3), // 3 days remaining
-    billingCycleDays: 28,
-    activeSessionToken: null,
-    activeDeviceName: null,
-    registeredAt: '2026-05-20',
-  },
-  {
-    id: 'owner-5',
-    name: 'Manish Patidar',
-    libraryName: 'Bhawarkua Civil Services Library',
-    email: 'manish@bhawarkua.com',
-    phone: '9826011223',
-    password: 'password123',
-    plan: 'Pro Growth',
-    planPrice: 199,
-    planStatus: 'expired',
-    expiryDate: getPastDate(5),
-    billingCycleDays: 28,
-    activeSessionToken: null,
-    activeDeviceName: null,
-    registeredAt: '2026-02-18',
-  },
-];
+// Initial library owners list (clean production mode)
+const INITIAL_OWNERS = [];
 
 export const AuthProvider = ({ children }) => {
   // Load library owners database
   const [owners, setOwners] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_OWNERS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const demoEmails = ['rohit@rajendranagar.com', 'alok@kankarbagh.com', 'suresh@kotastudy.com', 'vikas@hazratganj.com', 'manish@bhawarkua.com'];
+        return Array.isArray(parsed) ? parsed.filter((o) => !demoEmails.includes(o?.email?.toLowerCase())) : [];
+      }
     } catch (e) {
       console.warn('Error reading owners from storage:', e);
     }
-    return INITIAL_OWNERS;
+    return [];
   });
 
   // Current logged in owner session
@@ -118,6 +41,11 @@ export const AuthProvider = ({ children }) => {
       const saved = localStorage.getItem(STORAGE_KEY_CURRENT_SESSION);
       if (saved) {
         const parsed = JSON.parse(saved);
+        const demoEmails = ['rohit@rajendranagar.com', 'alok@kankarbagh.com', 'suresh@kotastudy.com', 'vikas@hazratganj.com', 'manish@bhawarkua.com'];
+        if (demoEmails.includes(parsed?.email?.toLowerCase())) {
+          localStorage.removeItem(STORAGE_KEY_CURRENT_SESSION);
+          return null;
+        }
         if (parsed?.sessionToken) {
           api.setToken(parsed.sessionToken);
         }
@@ -383,20 +311,55 @@ export const AuthProvider = ({ children }) => {
       };
     }
 
-    // Call Backend API
     const deviceName =
       customDeviceName ||
       (typeof window !== 'undefined' && window.innerWidth <= 768
         ? `Mobile Phone (Device #${Math.floor(Math.random() * 900 + 100)})`
         : `Desktop Browser (Chrome #${Math.floor(Math.random() * 900 + 100)})`);
 
-    api.login({ email: cleanEmail, password, deviceName }).then((apiRes) => {
-      if (apiRes?.token) {
+    // Call Backend API
+    try {
+      const apiRes = await api.login({ email: cleanEmail, password, deviceName });
+      if (apiRes?.success && apiRes?.token) {
         api.setToken(apiRes.token);
-      }
-    }).catch(() => {});
+        const ownerData = apiRes.owner || {};
+        const userObj = {
+          id: ownerData.id || `owner-${Date.now()}`,
+          name: ownerData.name,
+          libraryName: ownerData.libraryName,
+          email: ownerData.email,
+          phone: ownerData.phone,
+          plan: ownerData.subscriptionPlan || 'unpaid',
+          planPrice: ownerData.subscriptionPrice || 0,
+          planStatus: ownerData.subscriptionStatus || 'unpaid',
+          expiryDate: ownerData.expiryDate || null,
+          billingCycleDays: 28,
+        };
 
-    // Local state verification & single-device update
+        const sessionObj = {
+          email: userObj.email,
+          sessionToken: apiRes.token,
+          deviceName: ownerData.activeDeviceName || deviceName,
+          loggedInAt: new Date().toISOString(),
+        };
+
+        setOwners((prev) => {
+          const exists = prev.some((o) => o.email.toLowerCase() === cleanEmail);
+          return exists
+            ? prev.map((o) => (o.email.toLowerCase() === cleanEmail ? { ...o, ...userObj } : o))
+            : [userObj, ...prev];
+        });
+
+        setCurrentSession(sessionObj);
+        return { success: true, user: userObj, session: sessionObj };
+      } else if (apiRes?.error) {
+        return { success: false, error: apiRes.error };
+      }
+    } catch (err) {
+      console.warn('Backend login fallback to local:', err);
+    }
+
+    // Local fallback check
     const found = owners.find(
       (o) => o.email.toLowerCase() === cleanEmail && o.password === password
     );
@@ -489,13 +452,6 @@ export const AuthProvider = ({ children }) => {
   const startRegistration = async ({ name, libraryName, email, phone, password }) => {
     const cleanEmail = email.trim().toLowerCase();
 
-    if (owners.some((o) => o.email.toLowerCase() === cleanEmail)) {
-      return {
-        success: false,
-        error: 'An account with this email is already registered. Please log in instead.',
-      };
-    }
-
     if (cleanEmail === 'membiqsuperadmin') {
       return {
         success: false,
@@ -503,10 +459,20 @@ export const AuthProvider = ({ children }) => {
       };
     }
 
-    // Call backend API
-    api.register({ name, libraryName, email: cleanEmail, phone, password }).catch(() => {});
+    let generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    // Call backend API
+    try {
+      const apiRes = await api.register({ name, libraryName, email: cleanEmail, phone, password });
+      if (apiRes?.error) {
+        return { success: false, error: apiRes.error };
+      }
+      if (apiRes?.demoOtp) {
+        generatedOtp = apiRes.demoOtp;
+      }
+    } catch (err) {
+      console.warn('Backend register call notice:', err);
+    }
 
     const pending = {
       name: name.trim(),
@@ -543,12 +509,21 @@ export const AuthProvider = ({ children }) => {
       return { success: false, error: 'Invalid verification code. Please check and re-enter.' };
     }
 
-    // Backend verification
-    api.verifyOtp({ email: pendingRegistration.email, otp: otpInput }).catch(() => {});
-
-    const newOwnerId = `owner-${Date.now()}`;
-    const newSessionToken = `sess_${Math.random().toString(36).substring(2, 9)}_${Date.now()}`;
     const deviceName = `Initial Device (${typeof window !== 'undefined' && window.innerWidth <= 768 ? 'Mobile' : 'Desktop'})`;
+    let newOwnerId = `owner-${Date.now()}`;
+    let newSessionToken = `sess_${Math.random().toString(36).substring(2, 9)}_${Date.now()}`;
+
+    // Backend verification
+    try {
+      const apiRes = await api.verifyOtp({ email: pendingRegistration.email, otp: otpInput.trim(), deviceName });
+      if (apiRes?.token) {
+        newSessionToken = apiRes.token;
+        if (apiRes?.owner?.id) newOwnerId = apiRes.owner.id;
+        api.setToken(newSessionToken);
+      }
+    } catch (err) {
+      console.warn('Backend verify OTP notice:', err);
+    }
 
     const newOwner = {
       id: newOwnerId,
@@ -557,7 +532,7 @@ export const AuthProvider = ({ children }) => {
       email: pendingRegistration.email,
       phone: pendingRegistration.phone,
       password: pendingRegistration.password,
-      plan: 'Unsubscribed',
+      plan: 'unpaid',
       planPrice: 0,
       planStatus: 'unpaid',
       expiryDate: null,
@@ -568,7 +543,7 @@ export const AuthProvider = ({ children }) => {
       isEmailVerified: true,
     };
 
-    setOwners((prev) => [newOwner, ...prev]);
+    setOwners((prev) => [newOwner, ...prev.filter((o) => o.email.toLowerCase() !== newOwner.email.toLowerCase())]);
 
     const sessionObj = {
       email: newOwner.email,
@@ -578,10 +553,13 @@ export const AuthProvider = ({ children }) => {
     };
 
     setCurrentSession(sessionObj);
-    api.setToken(newSessionToken);
     setPendingRegistration(null);
 
-    return { success: true, user: newOwner };
+    return {
+      success: true,
+      user: newOwner,
+      session: sessionObj,
+    };
   };
 
   // 6. Resend Registration OTP

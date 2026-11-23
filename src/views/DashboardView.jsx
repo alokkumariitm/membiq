@@ -39,126 +39,9 @@ const getPastDate = (days) => {
   return new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 };
 
-// Initial realistic custom seats
-const INITIAL_SEATS = [
-  { id: 'F-01', name: 'F-01', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'filled', student: 'Rohan Sharma', nearAc: true },
-  { id: 'F-02', name: 'F-02', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'filled', student: 'Priya Verma', nearAc: true },
-  { id: 'F-03', name: 'F-03', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'active', student: null, nearAc: true },
-  { id: 'F-04', name: 'F-04', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'inactive', student: null, nearAc: false }, // Maintenance
-  { id: 'A-01', name: 'A-01', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'filled', student: 'Aman Gupta', nearAc: true },
-  { id: 'A-02', name: 'A-02', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'active', student: null, nearAc: false },
-  { id: 'A-10', name: 'A-10', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'filled', student: 'Deepak Patel', nearAc: true },
-  { id: 'A-11', name: 'A-11', zone: 'Hall A (AC Silence Zone)', type: 'fixed', status: 'active', student: null, nearAc: false },
+const INITIAL_SEATS = [];
 
-  { id: 'B-01', name: 'B-01', zone: 'Hall B (Discussion Pods)', type: 'floating', status: 'active', student: null, nearAc: true },
-  { id: 'B-02', name: 'B-02', zone: 'Hall B (Discussion Pods)', type: 'floating', status: 'filled', student: 'Ananya Roy', nearAc: false },
-  { id: 'B-03', name: 'B-03', zone: 'Hall B (Discussion Pods)', type: 'floating', status: 'active', student: null, nearAc: true },
-  { id: 'B-04', name: 'B-04', zone: 'Hall B (Discussion Pods)', type: 'floating', status: 'inactive', student: null, nearAc: false },
-  { id: 'FL-01', name: 'FL-01', zone: 'Floating Area', type: 'floating', status: 'filled', student: 'Karan Mehra', nearAc: false },
-  { id: 'FL-02', name: 'FL-02', zone: 'Floating Area', type: 'floating', status: 'active', student: null, nearAc: false },
-  { id: 'FL-03', name: 'FL-03', zone: 'Floating Area', type: 'floating', status: 'active', student: null, nearAc: true },
-  { id: 'FL-04', name: 'FL-04', zone: 'Floating Area', type: 'floating', status: 'active', student: null, nearAc: false },
-];
-
-// Initial realistic students
-const INITIAL_STUDENTS = [
-  {
-    id: 'st-1',
-    name: 'Rohan Sharma',
-    fatherName: 'Manoj Sharma',
-    address: 'Flat 102, Shanti Kunj, Patna',
-    phone: '9811223344',
-    studentType: 'fixed',
-    seatNumber: 'F-01',
-    shift: 'Morning 06:00 AM – 02:00 PM',
-    paidMonths: ['Nov 2026', 'Dec 2026'],
-    feeRate: 800,
-    totalFee: 1600,
-    joiningDate: '2026-10-01',
-    expiryDate: getFutureDate(22), // Active (22 days left)
-    status: 'active',
-  },
-  {
-    id: 'st-2',
-    name: 'Priya Verma',
-    fatherName: 'Rajesh Verma',
-    address: 'Near Old Bus Stand',
-    phone: '9876543210',
-    studentType: 'fixed',
-    seatNumber: 'F-02',
-    shift: 'Evening 02:00 PM – 10:00 PM',
-    paidMonths: ['Nov 2026'],
-    feeRate: 800,
-    totalFee: 800,
-    joiningDate: '2026-10-28',
-    expiryDate: getFutureDate(3), // Due Soon (Expires in 3 days!)
-    status: 'due',
-  },
-  {
-    id: 'st-3',
-    name: 'Aman Gupta',
-    fatherName: 'Sanjay Gupta',
-    address: 'Aspirants Hostel, Room 4',
-    phone: '9826011223',
-    studentType: 'fixed',
-    seatNumber: 'A-01',
-    shift: 'Full Day 24 Hours',
-    paidMonths: ['Nov 2026'],
-    feeRate: 1400,
-    totalFee: 1400,
-    joiningDate: '2026-10-29',
-    expiryDate: getFutureDate(4), // Due Soon (Expires in 4 days!)
-    status: 'due',
-  },
-  {
-    id: 'st-4',
-    name: 'Deepak Patel',
-    fatherName: 'Ramesh Patel',
-    address: 'Civil Lines',
-    phone: '9792045678',
-    studentType: 'fixed',
-    seatNumber: 'A-10',
-    shift: 'Night Owl 10:00 PM – 06:00 AM',
-    paidMonths: ['Oct 2026'],
-    feeRate: 750,
-    totalFee: 750,
-    joiningDate: '2026-09-15',
-    expiryDate: getPastDate(3), // Expired 3 days ago!
-    status: 'expired',
-  },
-  {
-    id: 'st-5',
-    name: 'Ananya Roy',
-    fatherName: 'Debashis Roy',
-    address: 'Kankarbagh Colony',
-    phone: '9431098765',
-    studentType: 'floating',
-    seatNumber: 'Floating Desk',
-    shift: 'Morning 06:00 AM – 02:00 PM',
-    paidMonths: ['Nov 2026'],
-    feeRate: 600,
-    totalFee: 600,
-    joiningDate: '2026-11-01',
-    expiryDate: getFutureDate(14), // Active
-    status: 'active',
-  },
-  {
-    id: 'st-6',
-    name: 'Karan Mehra',
-    fatherName: 'Sunil Mehra',
-    address: 'Boring Road',
-    phone: '9829012345',
-    studentType: 'floating',
-    seatNumber: 'Floating Desk',
-    shift: 'Evening 02:00 PM – 10:00 PM',
-    paidMonths: ['Oct 2026'],
-    feeRate: 600,
-    totalFee: 600,
-    joiningDate: '2026-09-20',
-    expiryDate: getPastDate(6), // Expired 6 days ago!
-    status: 'expired',
-  },
-];
+const INITIAL_STUDENTS = [];
 
 export const DashboardView = ({ setActiveView }) => {
   const { t } = useLanguage();
@@ -176,7 +59,11 @@ export const DashboardView = ({ setActiveView }) => {
   const [seats, setSeats] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_SEATS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const demoSeatIds = ['F-01','F-02','F-03','F-04','A-01','A-02','A-10','A-11','B-01','B-02','B-03','B-04','FL-01','FL-02','FL-03','FL-04'];
+        return Array.isArray(parsed) ? parsed.filter((s) => !demoSeatIds.includes(s.id)) : [];
+      }
     } catch (e) {
       console.warn('Error reading seats from storage:', e);
     }
@@ -187,7 +74,11 @@ export const DashboardView = ({ setActiveView }) => {
   const [students, setStudents] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_STUDENTS);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const demoStudentIds = ['st-1', 'st-2', 'st-3', 'st-4', 'st-5', 'st-6'];
+        return Array.isArray(parsed) ? parsed.filter((st) => !demoStudentIds.includes(st.id)) : [];
+      }
     } catch (e) {
       console.warn('Error reading students from storage:', e);
     }

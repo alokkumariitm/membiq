@@ -41,12 +41,6 @@ export const SuperAdminView = () => {
     }
   };
 
-  const handleFillDemoCreds = () => {
-    setAdminId('membiqsuperadmin');
-    setAdminPassword('Victus@2026MembiQ');
-    setLoginError('');
-  };
-
   // Filtered owners list
   const filteredOwners = owners.filter((owner) => {
     const matchesStatus = statusFilter === 'all' || owner.planStatus === statusFilter;
@@ -84,16 +78,6 @@ export const SuperAdminView = () => {
               </p>
             </div>
 
-            <div className="admin-creds-hint">
-              <strong>🔒 Protected Super Admin Access:</strong>
-              <div style={{ marginTop: '4px' }}>
-                Admin ID: <code>membiqsuperadmin</code>
-              </div>
-              <div style={{ marginTop: '2px' }}>
-                Password: <code>Victus@2026MembiQ</code>
-              </div>
-            </div>
-
             {loginError && (
               <div style={{ padding: '10px', backgroundColor: 'var(--color-danger-bg)', border: '1px solid var(--color-danger-border)', borderRadius: '8px', color: 'var(--color-danger)', fontSize: '0.88rem', marginBottom: '16px', fontWeight: '600' }}>
                 {loginError}
@@ -111,7 +95,7 @@ export const SuperAdminView = () => {
                   className="form-input"
                   value={adminId}
                   onChange={(e) => setAdminId(e.target.value)}
-                  placeholder="membiqsuperadmin"
+                  placeholder="Enter Super Admin ID"
                   required
                 />
               </div>
@@ -126,24 +110,15 @@ export const SuperAdminView = () => {
                   className="form-input"
                   value={adminPassword}
                   onChange={(e) => setAdminPassword(e.target.value)}
-                  placeholder="••••••••••••••••"
+                  placeholder="Enter Password"
                   required
                 />
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+              <div style={{ marginTop: '20px' }}>
                 <button type="submit" className="btn btn-primary btn-block btn-lg">
                   <Lock size={18} />
                   <span>Authenticate Super Admin</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-block"
-                  onClick={handleFillDemoCreds}
-                >
-                  <Sparkles size={16} color="var(--color-primary)" />
-                  <span>Auto-Fill Super Admin Credentials</span>
                 </button>
               </div>
             </form>

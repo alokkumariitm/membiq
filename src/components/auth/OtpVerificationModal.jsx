@@ -15,10 +15,10 @@ export const OtpVerificationModal = ({ isOpen, onClose, onSuccess }) => {
 
   if (!isOpen || !pendingRegistration) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    const res = verifyRegistrationOtp(otpInput);
+    const res = await verifyRegistrationOtp(otpInput);
     if (res.success) {
       setOtpInput('');
       if (onSuccess) onSuccess(res.user);
@@ -57,13 +57,13 @@ export const OtpVerificationModal = ({ isOpen, onClose, onSuccess }) => {
           <span className="otp-email-highlight">{pendingRegistration.email}</span>
         </p>
 
-        {/* Realistic Demo OTP Simulator Helper */}
         <div className="otp-simulation-badge">
-          <strong>⚡ Simulated Email Inbox (Development Mode):</strong>
-          Your Verification OTP is: <span style={{ fontSize: '1.1rem', fontWeight: '800', letterSpacing: '0.15em', color: '#1e3a8a' }}>{pendingRegistration.otp}</span>
-          <br />
-          <span style={{ fontSize: '0.75rem', opacity: 0.9 }}>
-            (In production, this is delivered directly to the library owner's registered inbox via transactional SMTP).
+          <strong>🔐 Verification Code (OTP):</strong>
+          <div style={{ fontSize: '1.25rem', fontWeight: '800', letterSpacing: '0.2em', color: '#1e3a8a', marginTop: '4px' }}>
+            {pendingRegistration.otp}
+          </div>
+          <span style={{ fontSize: '0.78rem', opacity: 0.9 }}>
+            Please enter this 6-digit code below to activate your account.
           </span>
         </div>
 

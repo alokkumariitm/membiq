@@ -19,10 +19,10 @@ export const ForgotPasswordModal = ({ isOpen, onClose, onPasswordResetSuccess })
 
   if (!isOpen) return null;
 
-  const handleRequestOtp = (e) => {
+  const handleRequestOtp = async (e) => {
     e.preventDefault();
     setErrorMsg('');
-    const res = requestPasswordReset(email);
+    const res = await requestPasswordReset(email);
     if (res.success) {
       setActiveOtpCode(res.otp);
       setStep(2);
@@ -31,7 +31,7 @@ export const ForgotPasswordModal = ({ isOpen, onClose, onPasswordResetSuccess })
     }
   };
 
-  const handleResetPassword = (e) => {
+  const handleResetPassword = async (e) => {
     e.preventDefault();
     setErrorMsg('');
 
@@ -45,7 +45,7 @@ export const ForgotPasswordModal = ({ isOpen, onClose, onPasswordResetSuccess })
       return;
     }
 
-    const res = verifyAndResetPassword(otpInput, newPassword);
+    const res = await verifyAndResetPassword(otpInput, newPassword);
     if (res.success) {
       setStep(3);
     } else {
