@@ -57,13 +57,18 @@ export const OtpVerificationModal = ({ isOpen, onClose, onSuccess }) => {
           <span className="otp-email-highlight">{pendingRegistration.email}</span>
         </p>
 
-        <div className="otp-simulation-badge">
-          <strong>🔐 Verification Code (OTP):</strong>
-          <div style={{ fontSize: '1.25rem', fontWeight: '800', letterSpacing: '0.2em', color: '#1e3a8a', marginTop: '4px' }}>
+        <div
+          className="otp-simulation-badge"
+          style={{ cursor: 'pointer', background: '#f5f3ff', border: '1px solid #ddd6fe' }}
+          onClick={() => setOtpInput(pendingRegistration.otp)}
+          title="Click to auto-fill code"
+        >
+          <strong style={{ color: '#6d28d9' }}>🔐 Verification Code (OTP):</strong>
+          <div style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '0.25em', color: '#7c3aed', margin: '6px 0' }}>
             {pendingRegistration.otp}
           </div>
-          <span style={{ fontSize: '0.78rem', opacity: 0.9 }}>
-            Please enter this 6-digit code below to activate your account.
+          <span style={{ fontSize: '0.78rem', color: '#6d28d9', fontWeight: '700' }}>
+            ⚡ Tap to auto-fill into box
           </span>
         </div>
 

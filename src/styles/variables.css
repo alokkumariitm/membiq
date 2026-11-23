@@ -1,9 +1,9 @@
 :root {
-  /* High-Contrast Color Palette */
-  --color-primary: #1d4ed8;
-  --color-primary-dark: #1e3a8a;
-  --color-primary-light: #eff6ff;
-  --color-primary-border: #bfdbfe;
+  /* High-Contrast Modern SaaS Color Palette (Purple / Violet Theme) */
+  --color-primary: #7c3aed;
+  --color-primary-dark: #6d28d9;
+  --color-primary-light: #f5f3ff;
+  --color-primary-border: #ddd6fe;
   
   --color-secondary: #0f766e;
   --color-secondary-dark: #115e59;

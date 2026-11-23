@@ -23,7 +23,6 @@ export const Navbar = ({ activeView, setActiveView }) => {
 
   const navItems = [
     { id: 'home', label: t('nav_home'), icon: Home },
-    { id: 'plans', label: t('nav_plans'), icon: CreditCard },
     { id: 'dashboard', label: t('nav_dashboard'), icon: LayoutDashboard },
     { id: 'superadmin', label: t('nav_superadmin'), icon: ShieldAlert },
   ];

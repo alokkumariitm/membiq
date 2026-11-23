@@ -5,24 +5,22 @@ import PaymentModal from '../components/payment/PaymentModal';
 import SeatManagementTab from '../components/dashboard/SeatManagementTab';
 import AdmissionFormTab from '../components/dashboard/AdmissionFormTab';
 import MemberDirectoryTab from '../components/dashboard/MemberDirectoryTab';
+import ShiftManagementTab from '../components/dashboard/ShiftManagementTab';
 
 import {
   Armchair,
-  Wind,
-  Volume2,
+  Users,
   Clock,
-  UserCheck,
-  CreditCard,
-  KeyRound,
-  CheckCircle2,
-  AlertCircle,
-  Sparkles,
-  ArrowRight,
-  Lock,
-  RefreshCw,
-  QrCode,
   UserPlus,
-  Users
+  BarChart2,
+  Lock,
+  CreditCard,
+  QrCode,
+  Bell,
+  LogOut,
+  ChevronRight,
+  AlertTriangle,
+  UserCheck
 } from 'lucide-react';
 import '../styles/dashboard.css';
 import '../styles/admission.css';
@@ -30,29 +28,19 @@ import '../styles/admission.css';
 const STORAGE_KEY_SEATS = 'membiq_seats_store';
 const STORAGE_KEY_STUDENTS = 'membiq_students_store';
 
-// Helper for initial dates
-const getFutureDate = (days) => {
-  return new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-};
-
-const getPastDate = (days) => {
-  return new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-};
-
 const INITIAL_SEATS = [];
-
 const INITIAL_STUDENTS = [];
 
 export const DashboardView = ({ setActiveView }) => {
   const { t } = useLanguage();
   const {
     currentUser,
+    logoutOwner,
     isSubscriptionActive,
     getDaysRemaining,
-    simulate28DayExpiry
   } = useAuth();
 
-  // Dashboard Sub-Tab: 'seats' | 'admission' | 'members'
+  // Active Tab: 'seats' | 'members' | 'overview' | 'shifts' | 'admission'
   const [activeSubTab, setActiveSubTab] = useState('seats');
 
   // Seats State
@@ -111,6 +99,32 @@ export const DashboardView = ({ setActiveView }) => {
   const daysRemaining = getDaysRemaining(currentUser);
 
   const libraryName = currentUser?.libraryName || 'membiQ Self-Study Reading Hall';
+  const ownerInitial = (currentUser?.name || 'O').charAt(0).toUpperCase();
+
+  // Helper to calculate student expiries for Screenshot 1 summary
+  const getDaysLeft = (expiryDateStr) => {
+    if (!expiryDateStr) return 0;
+    const exp = new Date(expiryDateStr).getTime();
+    const now = Date.now();
+    return Math.ceil((exp - now) / (1000 * 60 * 60 * 24));
+  };
+
+  const activeMembersCount = students.filter((s) => {
+    const days = getDaysLeft(s.expiryDate);
+    return s.status === 'active' && days > 5;
+  }).length;
+
+  const expiring5DaysCount = students.filter((s) => {
+    const days = getDaysLeft(s.expiryDate);
+    return s.status === 'due' || (days >= 0 && days <= 5);
+  }).length;
+
+  const expiredMembersCount = students.filter((s) => {
+    const days = getDaysLeft(s.expiryDate);
+    return s.status === 'expired' || days < 0;
+  }).length;
+
+  const totalMembersCount = students.length;
 
   // Handler when a new student is admitted
   const handleRegisterStudent = (newStudent) => {
@@ -126,68 +140,53 @@ export const DashboardView = ({ setActiveView }) => {
         )
       );
     }
+    setActiveSubTab('members');
   };
 
-  // Requirement 4: Automated 28-Day Expiry Check & Lock Screen
+  // Automated 28-Day Expiry Check & Lock Screen
   if (currentUser && !hasActiveSub) {
     return (
       <div className="dashboard-view">
-        <div className="container" style={{ maxWidth: '680px', margin: '40px auto', textAlign: 'center' }}>
-          <div style={{ backgroundColor: '#ffffff', border: '3px solid #ef4444', borderRadius: '16px', padding: '40px 24px', boxShadow: 'var(--shadow-xl)' }}>
-            <div style={{ width: '72px', height: '72px', borderRadius: '50%', backgroundColor: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-              <Lock size={36} />
+        <div className="container" style={{ maxWidth: '640px', margin: '40px auto', textAlign: 'center' }}>
+          <div style={{ backgroundColor: '#ffffff', border: '2px solid #ef4444', borderRadius: '16px', padding: '36px 20px', boxShadow: '0 10px 25px rgba(0,0,0,0.06)' }}>
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+              <Lock size={32} />
             </div>
 
             <span className="badge badge-amber" style={{ marginBottom: '12px' }}>
-              Automated 28-Day Cycle Locked
+              28-Day Subscription Expired
             </span>
 
-            <h2 style={{ fontSize: '1.75rem', color: '#991b1b', marginBottom: '10px', fontWeight: '800' }}>
-              Library Dashboard Access Locked
+            <h2 style={{ fontSize: '1.6rem', color: '#0f172a', marginBottom: '8px', fontWeight: '800' }}>
+              Dashboard Access Locked
             </h2>
 
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', lineHeight: '1.6', marginBottom: '24px' }}>
-              Your 28-day SaaS subscription for <strong>{currentUser.libraryName}</strong> has ended.
-              To eliminate manual follow-up calls, membiQ automatically locks desk allocation and attendance tools until renewed.
+            <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '24px' }}>
+              Your 28-day SaaS cycle for <strong>{currentUser.libraryName}</strong> has ended.
+              Renew your subscription to continue managing reading desks and admissions.
             </p>
 
-            <div style={{ backgroundColor: 'var(--color-bg-alt)', borderRadius: '12px', padding: '16px', marginBottom: '28px', textAlign: 'left', border: '1px solid var(--color-border)', fontSize: '0.9rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Library Branch:</span>
-                <strong>{currentUser.libraryName}</strong>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Status:</span>
-                <span style={{ color: '#dc2626', fontWeight: '700' }}>28-Day Cycle Expired</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--color-text-muted)' }}>Accepted Payment:</span>
-                <strong>Razorpay Checkout / Direct UPI QR</strong>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button
                 type="button"
-                className="btn btn-primary btn-lg btn-block"
+                className="btn-primary-purple-pill"
                 onClick={() => {
-                  if (setActiveView) setActiveView('plans');
+                  setSelectedPlanForPay({ name: 'Pro Growth', price: 199 });
+                  setShowPaymentModal(true);
                 }}
               >
-                <CreditCard size={20} />
-                <span>View Plans & Pay (₹199 / ₹499)</span>
+                <CreditCard size={18} />
+                <span>Renew Pro Growth Plan (₹199 / 28 Days)</span>
               </button>
 
               <button
                 type="button"
                 className="btn btn-secondary btn-block"
                 onClick={() => {
-                  setSelectedPlanForPay({ name: 'Pro Growth', price: 199 });
-                  setShowPaymentModal(true);
+                  if (setActiveView) setActiveView('plans');
                 }}
               >
-                <QrCode size={18} />
-                <span>Instant Quick Pay (Pro Growth — ₹199)</span>
+                <span>View All Plans</span>
               </button>
             </div>
           </div>
@@ -203,123 +202,62 @@ export const DashboardView = ({ setActiveView }) => {
     );
   }
 
-  // Active Seat Stats
-  const activeVacantCount = seats.filter((s) => s.status === 'active').length;
-  const occupiedCount = seats.filter((s) => s.status === 'filled').length;
-  const totalSeatsCount = seats.length;
-  const totalStudentsCount = students.length;
-
   return (
     <div className="dashboard-view">
-      <div className="container">
-        {/* Top Branch Header & 28-Day Cycle Status */}
-        <div className="dash-top-bar">
-          <div className="dash-header-info">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <span className="badge badge-green">
-                🟢 28-Day Plan Active ({daysRemaining} Days Left)
-              </span>
-              <span className="badge badge-blue">
-                Plan: {currentUser?.plan || 'Enterprise Elite'}
+      <div className="container" style={{ maxWidth: '820px', margin: '0 auto' }}>
+        {/* Top Header Matching Screenshots */}
+        <div className="dash-top-bar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0 18px', borderBottom: '1px solid #f1f5f9', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontWeight: '800', fontSize: '1.1rem' }}>
+              m
+            </div>
+            <div>
+              <h1 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
+                {libraryName}
+              </h1>
+              <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: '700' }}>
+                ● Active ({daysRemaining} days left)
               </span>
             </div>
-            <h1>{libraryName}</h1>
-            <p>
-              {currentUser?.name ? `Owner: ${currentUser.name} | ` : ''}
-              Subscription Expiry: <strong>{currentUser?.expiryDate || 'Active'}</strong>
-            </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-            <div className="dash-env-badges">
-              <span className="badge badge-ac">
-                <Wind size={15} />
-                {t('dash_stat_ac_status')}
-              </span>
-              <span className="badge badge-green">
-                <Volume2 size={15} />
-                {t('dash_stat_noise_level')}
-              </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <button
+              type="button"
+              className="dash-icon-btn"
+              title="Notifications"
+              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#ffffff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b' }}
+            >
+              <Bell size={18} />
+            </button>
+
+            <div
+              title={`Logged in as ${currentUser?.name || 'Owner'}`}
+              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#7c3aed', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1rem', cursor: 'default' }}
+            >
+              {ownerInitial}
             </div>
 
-            {/* Test Simulation Button */}
-            {currentUser && (
-              <button
-                type="button"
-                className="btn btn-secondary btn-sm"
-                style={{ borderColor: '#ef4444', color: '#b91c1c', fontSize: '0.78rem' }}
-                onClick={() => simulate28DayExpiry(currentUser.email)}
-                title="Simulate 28-day expiration to test the automatic lock"
-              >
-                🧪 Simulate 28-Day Expiry Lock
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={logoutOwner}
+              title="Sign Out"
+              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#fee2e2', border: '1px solid #fecaca', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#b91c1c' }}
+            >
+              <LogOut size={16} />
+            </button>
           </div>
         </div>
 
-        {/* 4 Primary Metric Cards */}
-        <div className="metrics-grid">
-          <div className="metric-card">
-            <div className="metric-header">
-              <span className="metric-title">{t('dash_stat_total_seats')}</span>
-              <Armchair size={20} color="var(--color-primary)" />
-            </div>
-            <div className="metric-value">{totalSeatsCount}</div>
-            <span className="metric-sub">{activeVacantCount} Vacant • {occupiedCount} Filled</span>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-header">
-              <span className="metric-title">{t('dash_stat_occupied')}</span>
-              <UserCheck size={20} color="var(--color-secondary)" />
-            </div>
-            <div className="metric-value">{occupiedCount}</div>
-            <span className="metric-sub">
-              {totalSeatsCount > 0 ? Math.round((occupiedCount / totalSeatsCount) * 100) : 0}% Occupancy
-            </span>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-header">
-              <span className="metric-title">Enrolled Students</span>
-              <Users size={20} color="var(--color-primary)" />
-            </div>
-            <div className="metric-value">{totalStudentsCount}</div>
-            <span className="metric-sub">
-              {students.filter((s) => s.studentType === 'fixed').length} Fixed • {students.filter((s) => s.studentType === 'floating').length} Floating
-            </span>
-          </div>
-
-          <div className="metric-card">
-            <div className="metric-header">
-              <span className="metric-title">{t('dash_stat_fees_collected')}</span>
-              <CreditCard size={20} color="var(--color-success)" />
-            </div>
-            <div className="metric-value">
-              ₹{students.reduce((acc, curr) => acc + (curr.totalFee || 0), 0).toLocaleString('en-IN')}
-            </div>
-            <span className="metric-sub">Monthly Fee Volume</span>
-          </div>
-        </div>
-
-        {/* Dashboard Sub-Tabs Ribbon */}
-        <div className="dash-subtabs-bar" role="tablist">
+        {/* Dashboard Sub-Tabs Ribbon (Screenshots 1, 2, 3, 4) */}
+        <div className="dash-subtabs-bar" role="tablist" style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '20px' }}>
           <button
             type="button"
             className={`dash-subtab-btn ${activeSubTab === 'seats' ? 'active' : ''}`}
             onClick={() => setActiveSubTab('seats')}
           >
-            <Armchair size={18} />
-            <span>{t('dash_tab_seats')}</span>
-          </button>
-
-          <button
-            type="button"
-            className={`dash-subtab-btn ${activeSubTab === 'admission' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('admission')}
-          >
-            <UserPlus size={18} />
-            <span>{t('dash_tab_admission')}</span>
+            <Armchair size={17} />
+            <span>Seats & Layout</span>
           </button>
 
           <button
@@ -327,12 +265,39 @@ export const DashboardView = ({ setActiveView }) => {
             className={`dash-subtab-btn ${activeSubTab === 'members' ? 'active' : ''}`}
             onClick={() => setActiveSubTab('members')}
           >
-            <Users size={18} />
-            <span>{t('dash_tab_members')}</span>
+            <Users size={17} />
+            <span>Members ({students.length})</span>
+          </button>
+
+          <button
+            type="button"
+            className={`dash-subtab-btn ${activeSubTab === 'overview' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('overview')}
+          >
+            <BarChart2 size={17} />
+            <span>Summary</span>
+          </button>
+
+          <button
+            type="button"
+            className={`dash-subtab-btn ${activeSubTab === 'shifts' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('shifts')}
+          >
+            <Clock size={17} />
+            <span>Shifts</span>
+          </button>
+
+          <button
+            type="button"
+            className={`dash-subtab-btn ${activeSubTab === 'admission' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('admission')}
+          >
+            <UserPlus size={17} />
+            <span>+ Admission</span>
           </button>
         </div>
 
-        {/* Tab 1: Seat Management */}
+        {/* TAB 1: Seat Availability & Layout (Screenshot 3) */}
         {activeSubTab === 'seats' && (
           <SeatManagementTab
             seats={seats}
@@ -340,19 +305,168 @@ export const DashboardView = ({ setActiveView }) => {
           />
         )}
 
-        {/* Tab 2: New Student Admission Form */}
+        {/* TAB 2: Member Management (Screenshot 2) */}
+        {activeSubTab === 'members' && (
+          <MemberDirectoryTab
+            students={students}
+            libraryName={libraryName}
+            onAddMemberClick={() => setActiveSubTab('admission')}
+          />
+        )}
+
+        {/* TAB 3: Summary & Analytics Stack (Screenshot 1) */}
+        {activeSubTab === 'overview' && (
+          <div className="overview-page">
+            <div className="tab-title-header">
+              <h2 className="tab-main-heading">Overview & Membership Stats</h2>
+              <p className="tab-sub-heading">
+                High-level operational health and subscription billing status.
+              </p>
+            </div>
+
+            <div className="screenshot1-summary-stack">
+              {/* Active Members Card */}
+              <div
+                className="screenshot1-card"
+                onClick={() => setActiveSubTab('members')}
+              >
+                <div className="screenshot1-top-row">
+                  <span className="screenshot1-title">ACTIVE MEMBERS</span>
+                  <div className="screenshot1-icon-badge badge-green-light">
+                    <UserCheck size={16} />
+                  </div>
+                </div>
+                <div className="screenshot1-middle-row">
+                  <span className="screenshot1-big-num">{activeMembersCount}</span>
+                  <span className="screenshot1-subtext">Valid memberships</span>
+                </div>
+                <div className="screenshot1-bottom-link">
+                  <span className="bottom-link-dot">
+                    <span className="indicator-dot green-dot"></span>
+                    Click to filter table
+                  </span>
+                  <ChevronRight size={14} />
+                </div>
+              </div>
+
+              {/* Expiring in 5 Days Card */}
+              <div
+                className="screenshot1-card"
+                onClick={() => setActiveSubTab('members')}
+              >
+                <div className="screenshot1-top-row">
+                  <span className="screenshot1-title">EXPIRING IN 5 DAYS</span>
+                  <div className="screenshot1-icon-badge badge-amber-light">
+                    <AlertTriangle size={16} />
+                  </div>
+                </div>
+                <div className="screenshot1-middle-row">
+                  <span className="screenshot1-big-num" style={{ color: expiring5DaysCount > 0 ? '#b45309' : '#0f172a' }}>
+                    {expiring5DaysCount}
+                  </span>
+                  <span className="screenshot1-subtext">Needs prompt renewal</span>
+                </div>
+                <div className="screenshot1-bottom-link">
+                  <span className="bottom-link-dot">
+                    <span className="indicator-dot red-dot" style={{ background: '#f59e0b' }}></span>
+                    Click to filter table
+                  </span>
+                  <ChevronRight size={14} />
+                </div>
+              </div>
+
+              {/* Expired Members Card */}
+              <div
+                className="screenshot1-card"
+                onClick={() => setActiveSubTab('members')}
+              >
+                <div className="screenshot1-top-row">
+                  <span className="screenshot1-title">EXPIRED MEMBERS</span>
+                  <div className="screenshot1-icon-badge badge-red-light">
+                    <Users size={16} />
+                  </div>
+                </div>
+                <div className="screenshot1-middle-row">
+                  <span className="screenshot1-big-num" style={{ color: expiredMembersCount > 0 ? '#b91c1c' : '#0f172a' }}>
+                    {expiredMembersCount}
+                  </span>
+                  <span className="screenshot1-subtext">Seat released</span>
+                </div>
+                <div className="screenshot1-bottom-link">
+                  <span className="bottom-link-dot">
+                    <span className="indicator-dot red-dot"></span>
+                    Click to filter table
+                  </span>
+                  <ChevronRight size={14} />
+                </div>
+              </div>
+
+              {/* Total Members Card (Purple Border) */}
+              <div
+                className="screenshot1-card screenshot1-card-purple-active"
+                onClick={() => setActiveSubTab('members')}
+              >
+                <div className="screenshot1-top-row">
+                  <span className="screenshot1-title" style={{ color: '#7c3aed' }}>TOTAL MEMBERS</span>
+                  <div className="screenshot1-icon-badge badge-purple-light">
+                    <Users size={16} />
+                  </div>
+                </div>
+                <div className="screenshot1-middle-row">
+                  <span className="screenshot1-big-num">{totalMembersCount}</span>
+                  <span className="screenshot1-subtext">Registered lifetime</span>
+                </div>
+                <div className="screenshot1-bottom-link">
+                  <span className="bottom-link-dot">
+                    <span className="indicator-dot" style={{ background: '#7c3aed' }}></span>
+                    Click to filter table
+                  </span>
+                  <ChevronRight size={14} />
+                </div>
+              </div>
+
+              {/* Seat Occupancy Card */}
+              <div
+                className="screenshot1-card"
+                onClick={() => setActiveSubTab('seats')}
+              >
+                <div className="screenshot1-top-row">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Armchair size={18} color="#7c3aed" />
+                    <strong style={{ fontSize: '0.95rem', color: '#0f172a' }}>Seat Occupancy Overview</strong>
+                  </div>
+                  <ChevronRight size={16} color="#94a3b8" />
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', paddingTop: '8px', textAlign: 'center' }}>
+                  <div style={{ background: '#f8fafc', padding: '10px 6px', borderRadius: '8px' }}>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b', display: 'block' }}>TOTAL</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#0f172a' }}>{seats.length}</strong>
+                  </div>
+                  <div style={{ background: '#f0fdf4', padding: '10px 6px', borderRadius: '8px' }}>
+                    <span style={{ fontSize: '0.72rem', color: '#10b981', display: 'block' }}>AVAILABLE</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#10b981' }}>{seats.filter(s => s.status === 'active').length}</strong>
+                  </div>
+                  <div style={{ background: '#fef2f2', padding: '10px 6px', borderRadius: '8px' }}>
+                    <span style={{ fontSize: '0.72rem', color: '#ef4444', display: 'block' }}>OCCUPIED</span>
+                    <strong style={{ fontSize: '1.25rem', color: '#ef4444' }}>{seats.filter(s => s.status === 'filled').length}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: Shift Management (Screenshot 4) */}
+        {activeSubTab === 'shifts' && (
+          <ShiftManagementTab />
+        )}
+
+        {/* TAB 5: New Admission Form */}
         {activeSubTab === 'admission' && (
           <AdmissionFormTab
             seats={seats}
             onRegisterStudent={handleRegisterStudent}
-            libraryName={libraryName}
-          />
-        )}
-
-        {/* Tab 3: Member Directory & Bulk Reminders */}
-        {activeSubTab === 'members' && (
-          <MemberDirectoryTab
-            students={students}
             libraryName={libraryName}
           />
         )}

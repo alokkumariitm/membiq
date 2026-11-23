@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'crypto';
 import LibraryOwner from '../models/LibraryOwner.js';
 import authMiddleware from '../middleware/auth.js';
+import sendOtpEmail from '../config/email.js';
 
 const router = express.Router();
 
@@ -55,11 +56,15 @@ router.post('/register', async (req, res) => {
       await owner.save();
     }
 
+    // Dispatch Email OTP
+    const mailResult = await sendOtpEmail(cleanEmail, otpCode, 'registration');
+
     return res.status(200).json({
       success: true,
       message: `Verification code sent to ${cleanEmail}`,
       email: cleanEmail,
-      demoOtp: otpCode, // Provided for instant testing
+      demoOtp: otpCode, // Immediate fallback so user is never blocked
+      emailSent: mailResult.success,
     });
   } catch (error) {
     console.error('Registration error:', error);
@@ -189,10 +194,13 @@ router.post('/forgot-password/request', async (req, res) => {
     owner.otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
     await owner.save();
 
+    const mailResult = await sendOtpEmail(cleanEmail, resetOtp, 'reset');
+
     return res.status(200).json({
       success: true,
       message: 'Password recovery code dispatched.',
       demoOtp: resetOtp,
+      emailSent: mailResult.success,
     });
   } catch (error) {
     return res.status(500).json({ error: error.message });

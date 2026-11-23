@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Armchair, PlusCircle, Filter, CheckCircle2, AlertTriangle, UserCheck } from 'lucide-react';
+import { Armchair, Plus, Search, CheckCircle2, AlertCircle, XCircle } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import AddSeatModal from './AddSeatModal';
 import SeatActionModal from './SeatActionModal';
@@ -8,22 +8,30 @@ import '../../styles/admission.css';
 export const SeatManagementTab = ({
   seats,
   setSeats,
-  onSeatClick
 }) => {
   const { t } = useLanguage();
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'active' | 'filled' | 'inactive'
+  const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [actionSeat, setActionSeat] = useState(null);
 
+  // Counts
+  const totalCount = seats.length;
+  const availableCount = seats.filter((s) => s.status === 'active').length;
+  const occupiedCount = seats.filter((s) => s.status === 'filled').length;
+  const inactiveCount = seats.filter((s) => s.status === 'inactive').length;
+
   // Filtered seats
   const filteredSeats = seats.filter((s) => {
-    if (statusFilter === 'all') return true;
-    return s.status === statusFilter;
+    const matchesStatus = statusFilter === 'all' || s.status === statusFilter;
+    const q = searchQuery.toLowerCase().trim();
+    const matchesSearch =
+      !q ||
+      s.name.toLowerCase().includes(q) ||
+      (s.student && s.student.toLowerCase().includes(q)) ||
+      (s.zone && s.zone.toLowerCase().includes(q));
+    return matchesStatus && matchesSearch;
   });
-
-  const activeCount = seats.filter((s) => s.status === 'active').length;
-  const filledCount = seats.filter((s) => s.status === 'filled').length;
-  const inactiveCount = seats.filter((s) => s.status === 'inactive').length;
 
   const handleAddSeat = (newSeat) => {
     setSeats((prev) => [...prev, newSeat]);
@@ -50,121 +58,169 @@ export const SeatManagementTab = ({
   const existingSeatNames = seats.map((s) => s.name.toUpperCase());
 
   return (
-    <div>
-      {/* Controls Bar: Filters & Add Seat Button */}
-      <div className="seat-controls-header">
-        <div className="seat-filter-pills">
-          <button
-            type="button"
-            className={`seat-status-pill ${statusFilter === 'all' ? 'active' : ''}`}
-            onClick={() => setStatusFilter('all')}
-          >
-            <span>{t('seat_filter_all')}</span>
-            <span style={{ opacity: 0.85 }}>({seats.length})</span>
-          </button>
+    <div className="seat-layout-page">
+      {/* Title & Subtitle */}
+      <div className="tab-title-header">
+        <h2 className="tab-main-heading">Seat Availability & Layout</h2>
+        <p className="tab-sub-heading">
+          Real-time visual map of reading desks, occupancy status, and shift allocations.
+        </p>
+      </div>
 
-          <button
-            type="button"
-            className={`seat-status-pill ${statusFilter === 'active' ? 'active' : ''}`}
-            style={{ borderColor: '#86efac', color: statusFilter === 'active' ? '#fff' : '#15803d' }}
-            onClick={() => setStatusFilter('active')}
-          >
-            <CheckCircle2 size={16} />
-            <span>{t('seat_status_active')}</span>
-            <span style={{ fontWeight: '800' }}>({activeCount})</span>
-          </button>
+      {/* Primary Purple Action Button */}
+      <button
+        type="button"
+        className="btn-primary-purple-pill"
+        onClick={() => setShowAddModal(true)}
+      >
+        <Plus size={20} />
+        <span>Add Seat</span>
+      </button>
 
-          <button
-            type="button"
-            className={`seat-status-pill ${statusFilter === 'filled' ? 'active' : ''}`}
-            style={{ borderColor: '#93c5fd', color: statusFilter === 'filled' ? '#fff' : '#1e40af' }}
-            onClick={() => setStatusFilter('filled')}
-          >
-            <UserCheck size={16} />
-            <span>{t('seat_status_filled')}</span>
-            <span style={{ fontWeight: '800' }}>({filledCount})</span>
-          </button>
-
-          <button
-            type="button"
-            className={`seat-status-pill ${statusFilter === 'inactive' ? 'active' : ''}`}
-            style={{ borderColor: '#cbd5e1', color: statusFilter === 'inactive' ? '#fff' : '#64748b' }}
-            onClick={() => setStatusFilter('inactive')}
-          >
-            <AlertTriangle size={16} />
-            <span>{t('seat_status_inactive')}</span>
-            <span style={{ fontWeight: '800' }}>({inactiveCount})</span>
-          </button>
+      {/* 4 Stat Cards in 2x2 Grid */}
+      <div className="seat-summary-grid">
+        <div
+          className={`seat-summary-card ${statusFilter === 'all' ? 'active-filter-card' : ''}`}
+          onClick={() => setStatusFilter('all')}
+        >
+          <span className="summary-card-label">TOTAL DESKS</span>
+          <span className="summary-card-number number-purple">{totalCount}</span>
         </div>
+
+        <div
+          className={`seat-summary-card ${statusFilter === 'active' ? 'active-filter-card' : ''}`}
+          onClick={() => setStatusFilter('active')}
+        >
+          <div className="card-label-with-icon">
+            <span className="indicator-dot green-dot"></span>
+            <span className="summary-card-label">AVAILABLE (GREEN)</span>
+          </div>
+          <span className="summary-card-number number-green">{availableCount}</span>
+        </div>
+
+        <div
+          className={`seat-summary-card ${statusFilter === 'filled' ? 'active-filter-card' : ''}`}
+          onClick={() => setStatusFilter('filled')}
+        >
+          <div className="card-label-with-icon">
+            <span className="indicator-dot red-dot"></span>
+            <span className="summary-card-label">OCCUPIED (RED)</span>
+          </div>
+          <span className="summary-card-number number-red">{occupiedCount}</span>
+        </div>
+
+        <div
+          className={`seat-summary-card ${statusFilter === 'inactive' ? 'active-filter-card' : ''}`}
+          onClick={() => setStatusFilter('inactive')}
+        >
+          <div className="card-label-with-icon">
+            <span className="indicator-dot gray-dot"></span>
+            <span className="summary-card-label">INACTIVE (GREY)</span>
+          </div>
+          <span className="summary-card-number number-gray">{inactiveCount}</span>
+        </div>
+      </div>
+
+      {/* Filter Pills Ribbon */}
+      <div className="modern-pills-bar">
+        <button
+          type="button"
+          className={`modern-pill ${statusFilter === 'all' ? 'pill-active' : ''}`}
+          onClick={() => setStatusFilter('all')}
+        >
+          All ({totalCount})
+        </button>
 
         <button
           type="button"
-          className="btn btn-primary"
-          onClick={() => setShowAddModal(true)}
+          className={`modern-pill ${statusFilter === 'active' ? 'pill-active' : ''}`}
+          onClick={() => setStatusFilter('active')}
         >
-          <PlusCircle size={18} />
-          <span>{t('seat_add_btn')}</span>
+          Available ({availableCount})
+        </button>
+
+        <button
+          type="button"
+          className={`modern-pill ${statusFilter === 'filled' ? 'pill-active' : ''}`}
+          onClick={() => setStatusFilter('filled')}
+        >
+          Occupied ({occupiedCount})
+        </button>
+
+        <button
+          type="button"
+          className={`modern-pill ${statusFilter === 'inactive' ? 'pill-active' : ''}`}
+          onClick={() => setStatusFilter('inactive')}
+        >
+          Inactive ({inactiveCount})
         </button>
       </div>
 
-      {/* Grid of Seats */}
-      <div style={{ backgroundColor: '#ffffff', border: '2px solid var(--color-border)', borderRadius: '14px', padding: '24px', boxShadow: 'var(--shadow-sm)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <div>
-            <h3 style={{ margin: 0, fontSize: '1.2rem' }}>
-              Interactive Floor Map (Click any seat to quick-switch status)
-            </h3>
-            <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-              Green: Vacant • Blue: Filled • Gray: Maintenance
-            </span>
-          </div>
-
-          <span className="badge badge-blue">
-            {filteredSeats.length} Seats Shown
-          </span>
-        </div>
-
-        {filteredSeats.length === 0 ? (
-          <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-            <Armchair size={48} style={{ margin: '0 auto 12px', opacity: 0.4 }} />
-            <p>No seats found matching the filter "{statusFilter}".</p>
-          </div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: '10px' }}>
-            {filteredSeats.map((seat) => (
-              <div
-                key={seat.id}
-                className={`seat-card status-${seat.status}`}
-                onClick={() => setActionSeat(seat)}
-                title={`${seat.name} - ${seat.status.toUpperCase()} ${seat.student ? `(${seat.student})` : ''}`}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
-                  <span className="seat-name-text">{seat.name}</span>
-                  {seat.nearAc && <span title="Near AC Unit" style={{ fontSize: '0.65rem' }}>❄️</span>}
-                </div>
-
-                <div className="seat-status-label">
-                  {seat.status === 'active' && 'Vacant'}
-                  {seat.status === 'filled' && 'Filled'}
-                  {seat.status === 'inactive' && 'Maintenance'}
-                </div>
-
-                {seat.status === 'filled' && seat.student ? (
-                  <div className="seat-student-badge">
-                    {seat.student}
-                  </div>
-                ) : (
-                  <div style={{ fontSize: '0.68rem', opacity: 0.7 }}>
-                    {seat.type === 'fixed' ? 'Fixed' : 'Floating'}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+      {/* Search Input Bar */}
+      <div className="modern-search-box">
+        <Search size={18} className="search-icon-inside" />
+        <input
+          type="text"
+          className="search-input-pill"
+          placeholder="Search seat or member..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
 
-      {/* Add Custom Seat Modal */}
+      {/* Visual Desk Grid */}
+      {filteredSeats.length === 0 ? (
+        <div className="empty-state-card">
+          <Armchair size={48} color="#94a3b8" style={{ margin: '0 auto 12px' }} />
+          <h3>No Seats Found</h3>
+          <p>
+            {seats.length === 0
+              ? 'No seats added yet. Click "+ Add Seat" above to set up your library layout!'
+              : `No seats matching the current filter "${statusFilter}".`}
+          </p>
+        </div>
+      ) : (
+        <div className="modern-desk-grid">
+          {filteredSeats.map((seat) => (
+            <div
+              key={seat.id}
+              className={`modern-seat-card card-status-${seat.status}`}
+              onClick={() => setActionSeat(seat)}
+              title="Click to change seat status or student"
+            >
+              <div className="seat-top-row">
+                <div className="seat-left-brand">
+                  <Armchair
+                    size={18}
+                    color={seat.status === 'active' ? '#10b981' : seat.status === 'filled' ? '#ef4444' : '#94a3b8'}
+                  />
+                  <strong className="seat-code-text">{seat.name}</strong>
+                </div>
+                <span
+                  className={`status-circle-dot ${
+                    seat.status === 'active' ? 'dot-active' : seat.status === 'filled' ? 'dot-filled' : 'dot-inactive'
+                  }`}
+                />
+              </div>
+
+              <div className="seat-middle-status">
+                {seat.status === 'active' && <span className="status-label-available">✓ Available</span>}
+                {seat.status === 'filled' && <span className="status-label-occupied">● Occupied</span>}
+                {seat.status === 'inactive' && <span className="status-label-inactive">✕ Inactive</span>}
+              </div>
+
+              <div className="seat-bottom-row">
+                <span className={`vacant-badge badge-${seat.status}`}>
+                  {seat.status === 'filled' && seat.student ? seat.student : seat.status === 'active' ? 'VACANT' : 'BLOCKED'}
+                </span>
+                {seat.nearAc && <span title="Near AC Unit" className="ac-snowflake">❄️</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Add Seat Modal */}
       <AddSeatModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
@@ -172,7 +228,7 @@ export const SeatManagementTab = ({
         existingSeatNames={existingSeatNames}
       />
 
-      {/* Quick Action Toggle Modal */}
+      {/* Seat Action Modal */}
       <SeatActionModal
         isOpen={!!actionSeat}
         onClose={() => setActionSeat(null)}

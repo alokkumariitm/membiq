@@ -127,10 +127,19 @@ export const ForgotPasswordModal = ({ isOpen, onClose, onPasswordResetSuccess })
               Recovery code sent to: <span className="otp-email-highlight">{email}</span>
             </p>
 
-            {/* Simulated OTP Code Display for Testing */}
-            <div className="otp-simulation-badge">
-              <strong>⚡ Simulated Reset Inbox:</strong>
-              Your Password Reset OTP is: <span style={{ fontSize: '1.1rem', fontWeight: '800', letterSpacing: '0.15em', color: '#1e3a8a' }}>{activeOtpCode}</span>
+            <div
+              className="otp-simulation-badge"
+              style={{ cursor: 'pointer', background: '#f5f3ff', border: '1px solid #ddd6fe' }}
+              onClick={() => setOtpInput(activeOtpCode)}
+              title="Click to auto-fill code"
+            >
+              <strong style={{ color: '#6d28d9' }}>🔐 Password Recovery Code (OTP):</strong>
+              <div style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '0.25em', color: '#7c3aed', margin: '6px 0' }}>
+                {activeOtpCode}
+              </div>
+              <span style={{ fontSize: '0.78rem', color: '#6d28d9', fontWeight: '700' }}>
+                ⚡ Tap to auto-fill into box
+              </span>
             </div>
 
             {errorMsg && (

@@ -575,20 +575,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 7. Request Password Reset OTP
-  const requestPasswordReset = (email) => {
+  const requestPasswordReset = async (email) => {
     const cleanEmail = email.trim().toLowerCase();
-    const found = owners.find((o) => o.email.toLowerCase() === cleanEmail);
+    let resetOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
-    if (!found) {
-      return {
-        success: false,
-        error: 'No registered library owner found with this email address.',
-      };
+    // Call backend API
+    try {
+      const res = await api.forgotPasswordRequest({ email: cleanEmail });
+      if (res?.error) {
+        return { success: false, error: res.error };
+      }
+      if (res?.demoOtp) {
+        resetOtp = res.demoOtp;
+      }
+    } catch (e) {
+      console.warn('API error:', e);
     }
-
-    api.forgotPasswordRequest({ email: cleanEmail }).catch(() => {});
-
-    const resetOtp = Math.floor(100000 + Math.random() * 900000).toString();
 
     setPendingPasswordReset({
       email: cleanEmail,
@@ -604,7 +606,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // 8. Verify OTP & Set New Password
-  const verifyAndResetPassword = (otpInput, newPassword) => {
+  const verifyAndResetPassword = async (otpInput, newPassword) => {
     if (!pendingPasswordReset) {
       return { success: false, error: 'No active password recovery request found.' };
     }
@@ -617,11 +619,18 @@ export const AuthProvider = ({ children }) => {
       return { success: false, error: 'Invalid recovery code. Please check and re-enter.' };
     }
 
-    api.forgotPasswordReset({
-      email: pendingPasswordReset.email,
-      otp: otpInput,
-      newPassword,
-    }).catch(() => {});
+    try {
+      const res = await api.forgotPasswordReset({
+        email: pendingPasswordReset.email,
+        otp: otpInput.trim(),
+        newPassword,
+      });
+      if (res?.error) {
+        return { success: false, error: res.error };
+      }
+    } catch (e) {
+      console.warn('API reset notice:', e);
+    }
 
     setOwners((prev) =>
       prev.map((o) =>
@@ -632,7 +641,7 @@ export const AuthProvider = ({ children }) => {
               activeSessionToken: null,
               activeDeviceName: null,
             }
-        : o
+          : o
       )
     );
 
