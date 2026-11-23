@@ -6,9 +6,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_FILE = path.resolve(__dirname, '../data/store.json');
 
-// Ensure data directory and file exist
-if (!fs.existsSync(path.dirname(DATA_FILE))) {
-  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+// Ensure data directory exists safely (no-op on read-only serverless filesystems)
+try {
+  if (!fs.existsSync(path.dirname(DATA_FILE))) {
+    fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+  }
+} catch {
+  // Read-only serverless environment
 }
 
 const getFutureDate = (days) => new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -120,25 +124,31 @@ const INITIAL_STORE = {
   ],
 };
 
-if (!fs.existsSync(DATA_FILE)) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(INITIAL_STORE, null, 2));
+try {
+  if (!fs.existsSync(DATA_FILE)) {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(INITIAL_STORE, null, 2));
+  }
+} catch {
+  // Read-only serverless environment
 }
+
+let memoryStore = JSON.parse(JSON.stringify(INITIAL_STORE));
 
 class JsonStore {
   read() {
     try {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
-    } catch {
-      return INITIAL_STORE;
-    }
+      if (fs.existsSync(DATA_FILE)) {
+        return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
+      }
+    } catch {}
+    return memoryStore;
   }
 
   write(data) {
+    memoryStore = data;
     try {
       fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-    } catch (e) {
-      console.warn('Failed to write store:', e);
-    }
+    } catch {}
   }
 
   createHelper(collectionName) {

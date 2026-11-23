@@ -13,11 +13,6 @@ import superadminRoutes from '../server/routes/superadminRoutes.js';
 
 dotenv.config();
 
-// Attempt connection on startup
-connectDB()
-  .then(() => seedInitialDatabase())
-  .catch((err) => console.error('DB init notice:', err.message));
-
 const app = express();
 
 app.use(cors({
@@ -27,6 +22,22 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+// Ensure Database connection for serverless invocations
+let dbInitPromise = null;
+app.use(async (req, res, next) => {
+  try {
+    if (!dbInitPromise) {
+      dbInitPromise = connectDB()
+        .then(() => seedInitialDatabase())
+        .catch((err) => console.warn('DB init warning:', err.message));
+    }
+    await dbInitPromise;
+  } catch (err) {
+    console.error('Middleware DB Error:', err);
+  }
+  next();
+});
 
 app.get('/api/health', (req, res) => {
   res.status(200).json({
