@@ -131,63 +131,24 @@ export const HomeView = ({ setActiveView }) => {
     <div className="home-view">
       <div className="container app-portal-container">
         <div className="app-portal-layout">
-          {/* Left: Clean Brand & Capabilities */}
+          {/* Brand & Subtitle Area */}
           <div className="app-brand-col">
-            <div className="app-brand-header">
-              <div className="brand-logo-pill">
-                <span className="logo-letter">m</span>
-                <span className="logo-text">membiQ</span>
-              </div>
-              <LanguageSwitcher prominent />
-            </div>
-
             <h1 className="portal-main-title">
-              Smart Reading Hall & Library Portal
+              Membi<span className="accent">Q</span>
             </h1>
             <p className="portal-sub-text">
-              {t('brand_tagline')}
+              smart library management system
             </p>
-
-            <div className="portal-highlights">
-              <div className="highlight-row">
-                <div className="highlight-icon">
-                  <Armchair size={20} color="#7c3aed" />
-                </div>
-                <div>
-                  <strong>{t('tab_seat_mgmt')}</strong>
-                  <span>Custom desks, AC silence zones & real-time occupancy.</span>
-                </div>
-              </div>
-
-              <div className="highlight-row">
-                <div className="highlight-icon">
-                  <Users size={20} color="#7c3aed" />
-                </div>
-                <div>
-                  <strong>{t('tab_admission_form')}</strong>
-                  <span>Fixed & floating seat students with flexible monthly fees.</span>
-                </div>
-              </div>
-
-              <div className="highlight-row">
-                <div className="highlight-icon">
-                  <MessageSquare size={20} color="#7c3aed" />
-                </div>
-                <div>
-                  <strong>{t('tab_member_directory')}</strong>
-                  <span>Instant WhatsApp receipts & 1-click bulk due reminders.</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="portal-security-note">
-              <ShieldCheck size={18} color="#15803d" />
-              <span>Single-Device Session Lock & 28-Day Automated Expiry Protection</span>
-            </div>
           </div>
 
-          {/* Right: Clean Web App Auth Card */}
+          {/* Clean Web App Auth Card */}
           <div className="app-auth-col">
+            {/* Single-Device Session Lock Banner Placed Above Library Owner Portal */}
+            <div className="portal-security-note-banner">
+              <ShieldCheck size={18} color="#10b981" />
+              <span>Single-Device Session Lock & 28-Day Automated Expiry Protection</span>
+            </div>
+
             <div className="auth-card">
               {/* If user is ALREADY logged in */}
               {currentUser && currentSession ? (

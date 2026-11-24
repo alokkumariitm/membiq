@@ -41,14 +41,20 @@ export const Navbar = ({ activeView, setActiveView }) => {
           type="button"
           className="nav-brand"
           onClick={() => handleNavClick('home')}
-          aria-label="membiQ Home"
+          aria-label="MembiQ Home"
         >
-          <div className="brand-icon-box">
-            <BookOpen size={24} />
-          </div>
-          <div className="brand-text-group">
-            <span className="brand-title">membi<span className="brand-accent">Q</span></span>
-            <span className="brand-sub">Reading Hall SaaS</span>
+          <img
+            src="/logo.png"
+            alt="MembiQ Logo"
+            className="nav-logo-img"
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              const textFallback = e.currentTarget.parentElement.querySelector('.brand-text-group');
+              if (textFallback) textFallback.style.display = 'flex';
+            }}
+          />
+          <div className="brand-text-group" style={{ display: 'none' }}>
+            <span className="brand-title">Membi<span className="brand-accent">Q</span></span>
           </div>
         </button>
 
@@ -100,9 +106,6 @@ export const Navbar = ({ activeView, setActiveView }) => {
               <span>Admin</span>
             </div>
           )}
-
-          {/* Prominent Language Switcher */}
-          <LanguageSwitcher />
 
           {/* Mobile Toggle Button */}
           <button
