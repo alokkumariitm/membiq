@@ -187,22 +187,81 @@
   }
 }
 
-/* Mobile Drawer */
-.mobile-menu-drawer {
+/* Mobile Drawer Overlay / Modal with Backdrop Blur */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(5, 7, 10, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
   display: flex;
   flex-direction: column;
-  background-color: #0d0f14;
-  border-top: 1px solid #1e222a;
-  border-bottom: 1px solid #1e222a;
-  padding: 16px 0;
-  animation: slideDown 150ms ease;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+  justify-content: flex-start;
+  padding: 16px;
+  animation: fadeIn 200ms ease;
+  overflow-y: auto;
 }
 
 @media (min-width: 992px) {
-  .mobile-menu-drawer {
+  .mobile-menu-overlay {
     display: none;
   }
+}
+
+.mobile-menu-modal {
+  width: 100%;
+  max-width: 440px;
+  margin: 10px auto 20px;
+  background: #11141a;
+  border: 1px solid #242934;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 25px rgba(255, 107, 0, 0.12);
+  animation: slideDown 200ms ease;
+}
+
+.mobile-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #1e222a;
+}
+
+.mobile-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #161922;
+  border: 1px solid #282d3c;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-close-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.mobile-user-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #161920;
+  border: 1px solid #242834;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
 }
 
 .mobile-menu-list {
@@ -210,7 +269,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 0 16px;
+  padding: 0;
 }
 
 .mobile-nav-btn {
@@ -256,4 +315,9 @@
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

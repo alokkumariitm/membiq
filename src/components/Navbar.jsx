@@ -21,6 +21,18 @@ export const Navbar = ({ activeView, setActiveView }) => {
   const { currentUser, currentSession, logoutOwner, isSuperAdmin, logoutSuperAdmin } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Lock background scroll when mobile menu is open
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navItems = [
     { id: 'home', label: t('nav_home'), icon: Home },
     { id: 'dashboard', label: t('nav_dashboard'), icon: LayoutDashboard },
@@ -36,26 +48,22 @@ export const Navbar = ({ activeView, setActiveView }) => {
   return (
     <header className="top-navbar">
       <div className="container nav-container">
-        {/* Brand */}
+        {/* Brand with /membiqlogopic.png */}
         <button
           type="button"
           className="nav-brand"
           onClick={() => handleNavClick('home')}
-          aria-label="MembiQ Home"
+          aria-label="membiQ Home"
         >
           <img
-            src="/logo.png"
-            alt="MembiQ Logo"
+            src="/membiqlogopic.png"
+            alt="membiQ Logo"
             className="nav-logo-img"
             onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              const textFallback = e.currentTarget.parentElement.querySelector('.brand-text-group');
-              if (textFallback) textFallback.style.display = 'flex';
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = '/logo.png';
             }}
           />
-          <div className="brand-text-group" style={{ display: 'none' }}>
-            <span className="brand-title">Membi<span className="brand-accent">Q</span></span>
-          </div>
         </button>
 
         {/* Desktop Menu */}
@@ -80,7 +88,7 @@ export const Navbar = ({ activeView, setActiveView }) => {
           })}
         </nav>
 
-        {/* Right Actions: User Profile Pill + Language Switcher + Mobile Toggle */}
+        {/* Right Actions: User Profile Pill + Mobile Toggle */}
         <div className="nav-actions">
           {/* Active Owner Status Pill (Desktop) */}
           {currentUser && currentSession && (
@@ -120,46 +128,72 @@ export const Navbar = ({ activeView, setActiveView }) => {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer Overlay / Modal with Backdrop Blur */}
       {mobileMenuOpen && (
-        <div className="mobile-menu-drawer">
-          {currentUser && currentSession && (
-            <div style={{ padding: '0 var(--space-4) var(--space-3)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--color-text-primary)' }}>
-                👤 {currentUser.name} ({currentUser.libraryName})
-              </span>
+        <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
+          <div className="mobile-menu-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <img
+                src="/membiqlogopic.png"
+                alt="membiQ Logo"
+                style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/logo.png';
+                }}
+              />
               <button
                 type="button"
-                className="btn btn-secondary btn-sm"
-                onClick={logoutOwner}
+                className="mobile-close-btn"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
               >
-                <LogOut size={14} />
-                <span>Logout</span>
+                <X size={22} />
               </button>
             </div>
-          )}
 
-          <ul className="mobile-menu-list">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeView === item.id;
-              return (
-                <li key={item.id}>
-                  <button
-                    type="button"
-                    className={`mobile-nav-btn ${isActive ? 'active' : ''}`}
-                    onClick={() => handleNavClick(item.id)}
-                  >
-                    <Icon size={20} />
-                    <span>{item.label}</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
+            {currentUser && currentSession && (
+              <div className="mobile-user-status-card">
+                <div>
+                  <div style={{ fontWeight: '700', color: '#ffffff', fontSize: '0.92rem' }}>{currentUser.name}</div>
+                  <div style={{ color: '#ff8c3a', fontSize: '0.8rem' }}>{currentUser.libraryName}</div>
+                </div>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => {
+                    logoutOwner();
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <LogOut size={14} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
 
-          <div className="mobile-lang-wrapper">
-            <LanguageSwitcher prominent />
+            <ul className="mobile-menu-list">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeView === item.id;
+                return (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      className={`mobile-nav-btn ${isActive ? 'active' : ''}`}
+                      onClick={() => handleNavClick(item.id)}
+                    >
+                      <Icon size={20} />
+                      <span>{item.label}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div className="mobile-lang-wrapper">
+              <LanguageSwitcher prominent />
+            </div>
           </div>
         </div>
       )}

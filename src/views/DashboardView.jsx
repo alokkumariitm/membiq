@@ -205,20 +205,21 @@ export const DashboardView = ({ setActiveView }) => {
   return (
     <div className="dashboard-view">
       <div className="container" style={{ maxWidth: '820px', margin: '0 auto' }}>
-        {/* Top Header Matching Screenshots */}
+        {/* Top Header */}
         <div className="dash-top-bar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0 18px', borderBottom: '1px solid #1f232d', marginBottom: '18px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#ff6b00', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000000', fontWeight: '800', fontSize: '1.1rem', boxShadow: '0 0 14px rgba(255, 107, 0, 0.45)' }}>
-              m
-            </div>
-            <div>
-              <h1 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>
-                {libraryName}
-              </h1>
-              <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: '700' }}>
-                ● Active ({daysRemaining} days left)
-              </span>
-            </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img
+              src="/membiqlogopic.png"
+              alt="membiQ Logo"
+              style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = '/logo.png';
+              }}
+            />
+            <h1 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#ffffff', margin: 0, letterSpacing: '-0.02em', fontFamily: 'var(--font-heading)' }}>
+              Dashboard
+            </h1>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -249,7 +250,7 @@ export const DashboardView = ({ setActiveView }) => {
           </div>
         </div>
 
-        {/* Dashboard Sub-Tabs Ribbon (Screenshots 1, 2, 3, 4) */}
+        {/* Dashboard Sub-Tabs Ribbon */}
         <div className="dash-subtabs-bar" role="tablist">
           <button
             type="button"
@@ -286,15 +287,6 @@ export const DashboardView = ({ setActiveView }) => {
             <Clock size={17} />
             <span>Shifts</span>
           </button>
-
-          <button
-            type="button"
-            className={`dash-subtab-btn ${activeSubTab === 'admission' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('admission')}
-          >
-            <UserPlus size={17} />
-            <span>+ Admission</span>
-          </button>
         </div>
 
         {/* TAB 1: Seat Availability & Layout (Screenshot 3) */}
@@ -310,7 +302,8 @@ export const DashboardView = ({ setActiveView }) => {
           <MemberDirectoryTab
             students={students}
             libraryName={libraryName}
-            onAddMemberClick={() => setActiveSubTab('admission')}
+            seats={seats}
+            onRegisterStudent={handleRegisterStudent}
           />
         )}
 

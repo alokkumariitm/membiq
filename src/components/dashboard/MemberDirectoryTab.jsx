@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import { Users, Search, MessageSquare, Plus, ExternalLink, Calendar } from 'lucide-react';
+import { Users, Search, MessageSquare, Plus } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import BulkWhatsAppModal from './BulkWhatsAppModal';
+import AddMemberModal from './AddMemberModal';
 import '../../styles/admission.css';
 
 export const MemberDirectoryTab = ({
   students,
   libraryName,
-  onAddMemberClick,
+  seats = [],
+  onRegisterStudent,
 }) => {
   const { t } = useLanguage();
 
   const [filterType, setFilterType] = useState('all'); // 'all' | 'active' | 'expiring' | 'expired'
   const [searchQuery, setSearchQuery] = useState('');
   const [showBulkModal, setShowBulkModal] = useState(false);
+  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
 
   // Helper to check days remaining for student fee
   const getDaysLeft = (expiryDateStr) => {
@@ -40,10 +43,9 @@ export const MemberDirectoryTab = ({
     const searchMatch =
       !q ||
       st.name.toLowerCase().includes(q) ||
-      (st.id && st.id.toLowerCase().includes(q)) ||
+      (st.fatherName && st.fatherName.toLowerCase().includes(q)) ||
       (st.phone && st.phone.includes(q)) ||
-      (st.seatNumber && st.seatNumber.toLowerCase().includes(q)) ||
-      (st.shift && st.shift.toLowerCase().includes(q));
+      (st.seatNumber && st.seatNumber.toLowerCase().includes(q));
 
     return statusMatch && searchMatch;
   });
@@ -53,29 +55,21 @@ export const MemberDirectoryTab = ({
     return st.status === 'due' || (days >= 0 && days <= 5) || st.status === 'expired' || days < 0;
   });
 
-  // Individual student reminder link
+  // Direct WhatsApp reminder link with pre-filled message
   const createSingleReminderUrl = (student) => {
     const phoneFormatted = (student.phone || '').replace(/\D/g, '');
     const cleanPhone = phoneFormatted.startsWith('91') ? phoneFormatted : `91${phoneFormatted}`;
     const days = getDaysLeft(student.expiryDate);
     const isExpired = days < 0 || student.status === 'expired';
 
-    const message = `Hello ${student.name}, this is a gentle reminder from ${libraryName}. Your reading hall membership for Seat ${student.seatNumber || 'Floating Desk'} (${student.shift || 'General Slot'}) is ${isExpired ? 'expired on' : 'expiring on'} ${student.expiryDate}. Please renew your monthly fee (₹${student.feeRate || student.totalFee || 800}) to retain your seat. Thank you!`;
+    const message = `Hello ${student.name}, this is a gentle reminder from ${libraryName || 'membiQ'}. Your reading hall membership for Seat ${student.seatNumber || 'Floating Desk'} (${student.shift || 'General Slot'}) is ${isExpired ? 'expired on' : 'expiring on'} ${student.expiryDate || 'soon'}. Please renew your fee (₹${student.feeRate || student.totalFee || 800}) to retain your seat. Thank you!`;
 
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
   };
 
   return (
     <div className="member-mgmt-page">
-      {/* Title & Subtitle */}
-      <div className="tab-title-header">
-        <h2 className="tab-main-heading">Member Management</h2>
-        <p className="tab-sub-heading">
-          Comprehensive directory of library patrons, active memberships, seats, and renewals.
-        </p>
-      </div>
-
-      {/* Main White Directory Container Card */}
+      {/* Main Directory Container Card */}
       <div className="modern-section-card">
         <div className="card-top-header">
           <div>
@@ -101,11 +95,11 @@ export const MemberDirectoryTab = ({
           )}
         </div>
 
-        {/* Primary Purple Action Button: + Add Member */}
+        {/* Primary Action Button: Opens Add Member Modal directly */}
         <button
           type="button"
-          className="btn-primary-purple-pill"
-          onClick={onAddMemberClick}
+          className="btn-primary-action-pill"
+          onClick={() => setShowAddMemberModal(true)}
         >
           <Plus size={20} />
           <span>Add Member</span>
@@ -152,33 +146,29 @@ export const MemberDirectoryTab = ({
           <input
             type="text"
             className="search-input-pill"
-            placeholder="Search by name, ID, phone..."
+            placeholder="Search by name, seat, phone..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
-        {/* Members Table */}
+        {/* Members Table - Clean 3 Columns: Student Name, Seat No., WhatsApp Action */}
         <div className="modern-table-responsive">
           <table className="modern-directory-table">
             <thead>
               <tr>
-                <th>MEMBER ID</th>
-                <th>NAME ⇅</th>
-                <th>WHATSAPP</th>
-                <th>SEAT</th>
-                <th>SHIFT</th>
-                <th>VALIDITY</th>
-                <th>ACTIONS</th>
+                <th>STUDENT NAME</th>
+                <th>SEAT NO.</th>
+                <th>WHATSAPP ACTION</th>
               </tr>
             </thead>
             <tbody>
               {filteredStudents.length === 0 ? (
                 <tr>
-                  <td colSpan={7} style={{ textAlign: 'center', padding: '48px 16px', color: '#94a3b8' }}>
+                  <td colSpan={3} style={{ textAlign: 'center', padding: '48px 16px', color: '#9ca3af' }}>
                     <Users size={44} style={{ margin: '0 auto 8px', opacity: 0.5 }} />
-                    <div style={{ fontWeight: '700', fontSize: '1rem', color: '#475569' }}>No members found</div>
-                    <div style={{ fontSize: '0.84rem' }}>
+                    <div style={{ fontWeight: '700', fontSize: '1rem', color: '#ffffff' }}>No members found</div>
+                    <div style={{ fontSize: '0.84rem', color: '#9ca3af' }}>
                       {students.length === 0
                         ? 'Click "+ Add Member" above to admit your first student!'
                         : 'No members matching the selected filter.'}
@@ -186,67 +176,44 @@ export const MemberDirectoryTab = ({
                   </td>
                 </tr>
               ) : (
-                filteredStudents.map((st) => {
-                  const days = getDaysLeft(st.expiryDate);
-                  const isExpired = days < 0 || st.status === 'expired';
-                  const isDue = (days >= 0 && days <= 5) || st.status === 'due';
-
-                  return (
-                    <tr key={st.id}>
-                      <td style={{ fontWeight: '600', color: '#64748b', fontSize: '0.82rem' }}>
-                        {st.id.substring(0, 8).toUpperCase()}
-                      </td>
-                      <td>
-                        <strong style={{ color: '#0f172a', display: 'block' }}>{st.name}</strong>
-                        {st.fatherName && <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>S/o {st.fatherName}</span>}
-                      </td>
-                      <td>
-                        <a
-                          href={`https://wa.me/91${(st.phone || '').replace(/\D/g, '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: '#25d366', fontWeight: '700', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
-                        >
-                          <MessageSquare size={14} />
-                          <span>{st.phone}</span>
-                        </a>
-                      </td>
-                      <td>
-                        <span className="badge badge-seat">
-                          {st.seatNumber || 'Floating'}
-                        </span>
-                      </td>
-                      <td style={{ fontSize: '0.84rem', color: '#475569' }}>
-                        {st.shift || 'General'}
-                      </td>
-                      <td>
-                        <div style={{ fontWeight: '700', fontSize: '0.85rem', color: isExpired ? '#b91c1c' : isDue ? '#b45309' : '#15803d' }}>
-                          {st.expiryDate || 'N/A'}
-                        </div>
-                        <span style={{ fontSize: '0.74rem', color: isExpired ? '#b91c1c' : isDue ? '#b45309' : '#15803d' }}>
-                          {isExpired ? `Expired ${Math.abs(days)}d ago` : `${days} days left`}
-                        </span>
-                      </td>
-                      <td>
-                        <a
-                          href={createSingleReminderUrl(st)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-whatsapp-pill"
-                          title="Send WhatsApp Fee Reminder"
-                        >
-                          <MessageSquare size={14} />
-                          <span>WhatsApp</span>
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })
+                filteredStudents.map((st) => (
+                  <tr key={st.id}>
+                    <td>
+                      <strong style={{ color: '#ffffff', fontSize: '0.96rem', display: 'block' }}>{st.name}</strong>
+                      {st.fatherName && <span style={{ fontSize: '0.78rem', color: '#9ca3af' }}>S/o {st.fatherName}</span>}
+                    </td>
+                    <td>
+                      <span className="badge badge-seat">
+                        {st.seatNumber || 'Floating'}
+                      </span>
+                    </td>
+                    <td>
+                      <a
+                        href={createSingleReminderUrl(st)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-whatsapp-pill"
+                        title="Send WhatsApp Message"
+                      >
+                        <MessageSquare size={14} />
+                        <span>WhatsApp</span>
+                      </a>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {/* Integrated Add Member Modal */}
+      <AddMemberModal
+        isOpen={showAddMemberModal}
+        onClose={() => setShowAddMemberModal(false)}
+        onRegisterStudent={onRegisterStudent}
+        seats={seats}
+      />
 
       {/* Bulk WhatsApp Reminder Modal */}
       <BulkWhatsAppModal

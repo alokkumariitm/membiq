@@ -18,13 +18,19 @@ export const Footer = ({
         <div className="footer-top">
           <div className="footer-brand">
             <div className="footer-brand-title">
-              <BookOpen size={24} color="#60a5fa" />
-              <span>{t('brand_name')}</span>
+              <img
+                src="/membiqlogopic.png"
+                alt="membiQ Logo"
+                style={{ height: '28px', width: 'auto', objectFit: 'contain' }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/logo.png';
+                }}
+              />
             </div>
             <p className="footer-brand-desc">{t('footer_tagline')}</p>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-              <span className="badge badge-blue">Razorpay KYC Ready</span>
-              <span className="badge badge-green">ISO 27001 Cloud</span>
+            <div className="footer-version-text" style={{ fontSize: '0.84rem', color: '#9ca3af', fontWeight: '600' }}>
+              Version 2.0
             </div>
           </div>
 
@@ -63,28 +69,22 @@ export const Footer = ({
         </div>
 
         <div className="footer-bottom">
-          {/* Requirement 4.a: © All Rights Reserved — membiQ */}
-          <button
-            type="button"
-            className="footer-copyright-btn"
-            onClick={openCopyrightModal}
-            title="Click to view Platform & Copyright Info"
-          >
-            <Copyright size={18} />
-            <span>{t('footer_copyright')}</span>
-          </button>
+          {/* Plain unboxed footer text */}
+          <span className="footer-copyright-plain" style={{ color: '#9ca3af', fontSize: '0.88rem' }}>
+            © All Rights Reserved - membiQ
+          </span>
 
-          {/* Requirement 4.b: Powered by AddreX Solution */}
-          <button
-            type="button"
-            className="footer-powered-btn"
-            onClick={openAddrexModal}
-            title="Click to view AddreX Solution company details"
+          {/* Clean unboxed clickable link pointing to AddreX Solution */}
+          <a
+            href="https://alokkumariitm.github.io/addrex-solution/index.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-powered-plain-link"
+            style={{ color: '#ff6b00', fontSize: '0.88rem', fontWeight: '600', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
-            <Sparkles size={18} color="#93c5fd" />
-            <span>{t('footer_powered_by')}</span>
-            <ExternalLink size={16} />
-          </button>
+            <span>Powered by AddreX Solution</span>
+            <ExternalLink size={14} />
+          </a>
         </div>
       </div>
     </footer>

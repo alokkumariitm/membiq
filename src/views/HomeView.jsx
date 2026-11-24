@@ -134,7 +134,7 @@ export const HomeView = ({ setActiveView }) => {
           {/* Brand & Subtitle Area */}
           <div className="app-brand-col">
             <h1 className="portal-main-title">
-              Membi<span className="accent">Q</span>
+              membi<span className="accent">Q</span>
             </h1>
             <p className="portal-sub-text">
               smart library management system
