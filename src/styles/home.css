@@ -1,29 +1,39 @@
-/* App Portal Clean Layout (No bloated website fluff) */
+/* ==========================================================================
+   membiQ SaaS - Home Portal (AddreX Luxury Theme)
+   ========================================================================== */
+
 .home-view {
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 16px;
-  background: linear-gradient(180deg, #f5f3ff 0%, #f8fafc 100%);
+  padding: 36px 16px;
+  background-color: #090a0d;
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 80%, rgba(255, 107, 0, 0.04) 0%, transparent 40%);
+  position: relative;
+  overflow: hidden;
 }
 
 .app-portal-container {
-  max-width: 1040px;
+  max-width: 1060px;
   width: 100%;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .app-portal-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 36px;
+  gap: 32px;
   align-items: center;
 }
 
 @media (min-width: 900px) {
   .app-portal-layout {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1.15fr 0.85fr;
     gap: 48px;
   }
 }
@@ -45,11 +55,11 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #ffffff;
+  background: #121419;
   padding: 6px 16px 6px 8px;
   border-radius: 9999px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid #222632;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 .logo-letter {
@@ -58,46 +68,57 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: #7c3aed;
-  color: #ffffff;
+  background: #ff6b00;
+  color: #000000;
   border-radius: 50%;
   font-weight: 800;
   font-size: 1.1rem;
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.5);
 }
 
 .logo-text {
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #ffffff;
   letter-spacing: -0.02em;
 }
 
+.logo-text .accent {
+  color: #ff6b00;
+}
+
 .portal-main-title {
-  font-size: 2rem;
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
   font-weight: 800;
-  color: #0f172a;
-  line-height: 1.25;
-  margin: 0 0 12px;
+  color: #ffffff;
+  line-height: 1.2;
+  margin: 0 0 14px;
   letter-spacing: -0.02em;
+}
+
+.portal-main-title .accent {
+  color: #ff6b00;
 }
 
 @media (min-width: 768px) {
   .portal-main-title {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
 }
 
 .portal-sub-text {
-  font-size: 1.05rem;
-  color: #475569;
-  line-height: 1.5;
-  margin: 0 0 24px;
+  font-size: 1.02rem;
+  color: #9ca3af;
+  line-height: 1.6;
+  margin: 0 0 28px;
 }
 
 .portal-highlights {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   margin-bottom: 24px;
 }
 
@@ -105,11 +126,17 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  background: #12141a;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #1f232d;
+  transition: all 0.2s ease;
+}
+
+.highlight-row:hover {
+  border-color: rgba(255, 107, 0, 0.3);
+  background: #151820;
+  transform: translateY(-1px);
 }
 
 .highlight-icon {
@@ -119,21 +146,22 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: #f5f3ff;
+  background: rgba(255, 107, 0, 0.1);
+  color: #ff6b00;
   flex-shrink: 0;
 }
 
 .highlight-row strong {
   display: block;
   font-size: 0.95rem;
-  color: #0f172a;
+  color: #ffffff;
   margin-bottom: 2px;
 }
 
 .highlight-row span {
   display: block;
   font-size: 0.84rem;
-  color: #64748b;
+  color: #9ca3af;
   line-height: 1.4;
 }
 
@@ -143,16 +171,30 @@
   gap: 8px;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #15803d;
-  background: #dcfce7;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.1);
   padding: 8px 14px;
   border-radius: 8px;
-  border: 1px solid #86efac;
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
 /* Auth Column */
 .app-auth-col {
   width: 100%;
+}
+
+.app-auth-col .card {
+  background: #13161c;
+  border: 1px solid #222632;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 480px) {
+  .app-auth-col .card {
+    padding: 18px 14px;
+  }
 }
 
 .logged-in-box {
@@ -167,13 +209,54 @@
 }
 
 .active-session-info {
-  background: #f8fafc;
+  background: #0e1014;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #1f232d;
   padding: 14px;
   margin-bottom: 18px;
   font-size: 0.88rem;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  color: #d1d5db;
+}
+
+/* Custom Auth Tabs */
+.auth-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #0e1015;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid #1f232c;
+  margin-bottom: 20px;
+  gap: 4px;
+}
+
+.auth-tab-btn {
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 42px;
+}
+
+.auth-tab-btn.active {
+  background: #ff6b00;
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(255, 107, 0, 0.35);
+}
+
+/* Mobile responsive inputs and buttons */
+@media (max-width: 600px) {
+  .app-auth-col form .btn-block {
+    min-height: 46px;
+    font-size: 0.95rem;
+  }
 }

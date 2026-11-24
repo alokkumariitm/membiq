@@ -1,216 +1,124 @@
-/* Super Admin View Styles */
-.superadmin-view {
-  padding: var(--space-6) 0 var(--space-16);
+/* ==========================================================================
+   membiQ SaaS - Super Admin View (AddreX Luxury Dark Theme)
+   ========================================================================== */
+
+.super-admin-view {
+  padding: 36px 0 60px;
 }
 
-/* Isolated Login Card */
-.admin-login-wrapper {
-  max-width: 520px;
-  margin: var(--space-8) auto;
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
-  border-radius: var(--card-radius);
-  padding: var(--space-8) var(--space-6);
-  box-shadow: var(--shadow-xl);
-  text-align: center;
-}
-
-.admin-login-header {
-  margin-bottom: var(--space-6);
-}
-
-.admin-shield-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-3);
-  box-shadow: 0 4px 10px rgba(30, 58, 138, 0.3);
-}
-
-.admin-login-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-1);
-}
-
-.admin-login-sub {
-  font-size: 0.88rem;
-  color: var(--color-text-muted);
-}
-
-.admin-creds-hint {
-  background-color: var(--color-primary-light);
-  border: 1px solid var(--color-primary-border);
-  border-radius: var(--btn-radius);
-  padding: var(--space-3);
-  margin-bottom: var(--space-5);
-  font-size: 0.82rem;
-  color: var(--color-primary-dark);
+.admin-header {
+  margin-bottom: 24px;
   text-align: left;
 }
 
-.admin-creds-hint code {
+.admin-header h1 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
   font-weight: 800;
-  color: var(--color-primary-dark);
-  background-color: #ffffff;
-  padding: 2px 6px;
-  border-radius: 4px;
+  color: #ffffff;
+  margin-bottom: 4px;
 }
 
-/* Authenticated Portal Header */
-.admin-header-row {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
-  padding-bottom: var(--space-6);
-  border-bottom: 2px solid var(--color-border);
+.admin-header p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.admin-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 @media (min-width: 768px) {
-  .admin-header-row {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  .admin-metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.admin-header-row h1 {
-  font-size: var(--font-size-2xl);
+.admin-metric-card {
+  background-color: #121419;
+  border: 1px solid #222632;
+  border-radius: var(--card-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.admin-metric-card:hover {
+  border-color: #3b4252;
+  background-color: #151820;
+}
+
+.admin-metric-card.highlight {
+  border: 1.5px solid #ff6b00 !important;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.15) !important;
+}
+
+.admin-metric-title {
+  font-size: 0.72rem;
   font-weight: 800;
-  margin-bottom: var(--space-1);
+  color: #9ca3af;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
 }
 
-/* Strict Privacy Banner */
-.admin-privacy-banner {
-  background-color: #f0fdf4;
-  border: 2px solid #86efac;
-  border-radius: var(--card-radius);
-  padding: var(--space-4) var(--space-5);
-  margin-bottom: var(--space-6);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-}
-
-.admin-privacy-icon {
-  color: #15803d;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.admin-privacy-text h4 {
-  margin: 0 0 2px 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #166534;
-}
-
-.admin-privacy-text p {
-  margin: 0;
-  font-size: 0.86rem;
-  color: #14532d;
-  line-height: 1.5;
-}
-
-/* Filter controls */
-.admin-filters-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-  align-items: center;
-}
-
-.filter-pill {
-  min-height: 38px;
-  padding: 6px 14px;
-  border-radius: 9999px;
-  border: 1px solid var(--color-border);
-  background-color: var(--color-bg-card);
-  color: var(--color-text-secondary);
-  font-family: var(--font-family);
-  font-size: 0.84rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.filter-pill.active {
-  background-color: var(--color-primary);
+.admin-metric-value {
+  font-size: 1.85rem;
+  font-weight: 800;
   color: #ffffff;
-  border-color: var(--color-primary);
+  line-height: 1.1;
+  font-family: var(--font-heading);
 }
 
-/* Tenant Directory Table */
-.admin-table-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
-  border-radius: var(--card-radius);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-sm);
+.admin-card {
+  background-color: #121419;
+  border: 1px solid #222632;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.table-responsive {
-  width: 100%;
+@media (max-width: 480px) {
+  .admin-card {
+    padding: 16px 12px;
+  }
+}
+
+.admin-table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #1f232d;
+  border-radius: 10px;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
 }
 
 .admin-table th {
-  background-color: var(--color-bg-alt);
-  padding: var(--space-3) var(--space-4);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  border-bottom: 2px solid var(--color-border);
+  background-color: #0e1014;
+  color: #9ca3af;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 12px;
+  border-bottom: 1px solid #1f232d;
   white-space: nowrap;
+  font-family: var(--font-mono);
 }
 
 .admin-table td {
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--color-border-subtle);
-  color: var(--color-text-secondary);
+  padding: 12px;
+  border-bottom: 1px solid #1a1e26;
+  color: #d1d5db;
   vertical-align: middle;
-}
-
-.admin-table tr:hover td {
-  background-color: #f8fafc;
-}
-
-/* WhatsApp Reminder Button */
-.btn-whatsapp {
-  background-color: #25d366;
-  color: #ffffff;
-  border: 1px solid #1da851;
-  font-size: 0.84rem;
-  font-weight: 700;
-  min-height: 40px;
-  padding: 6px 14px;
-  border-radius: var(--btn-radius);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: 0 1px 3px rgba(37, 211, 102, 0.25);
-  white-space: nowrap;
-}
-
-.btn-whatsapp:hover {
-  background-color: #1ebe5d;
-  color: #ffffff;
-  transform: translateY(-1px);
 }

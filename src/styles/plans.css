@@ -1,6 +1,9 @@
-/* Subscription Plans View Styles */
+/* ==========================================================================
+   membiQ SaaS - Subscription Plans View (AddreX Luxury Dark Theme)
+   ========================================================================== */
+
 .plans-view {
-  padding: var(--space-8) 0 var(--space-16);
+  padding: 36px 0 60px;
 }
 
 .plans-head {
@@ -10,8 +13,10 @@
 }
 
 .plans-head h1 {
+  font-family: var(--font-heading);
   font-size: var(--font-size-3xl);
   font-weight: 800;
+  color: #ffffff;
   margin-bottom: var(--space-3);
 }
 
@@ -24,24 +29,24 @@
 .plans-billing-toggle {
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-bg-alt);
+  background-color: #121419;
   padding: 4px;
   border-radius: 9999px;
-  border: 2px solid var(--color-border);
+  border: 1px solid #222632;
   gap: 4px;
   margin-top: var(--space-4);
 }
 
 .billing-toggle-btn {
-  min-height: 44px;
+  min-height: 42px;
   padding: 8px 20px;
   border-radius: 9999px;
   border: none;
   background: transparent;
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--color-text-secondary);
+  color: #9ca3af;
   cursor: pointer;
   transition: all var(--transition-fast);
   display: inline-flex;
@@ -50,9 +55,9 @@
 }
 
 .billing-toggle-btn.active {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  box-shadow: 0 2px 4px rgba(29, 78, 216, 0.3);
+  background-color: #ff6b00;
+  color: #000000;
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
 }
 
 .plans-grid {
@@ -70,155 +75,107 @@
 }
 
 .pricing-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
-  border-radius: var(--card-radius);
-  padding: var(--space-8) var(--space-6);
+  background-color: #121419;
+  border: 1px solid #222632;
+  border-radius: 16px;
+  padding: 35px 24px;
   display: flex;
   flex-direction: column;
   position: relative;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .pricing-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+  border-color: #3b4252;
 }
 
 .pricing-card.featured {
-  border-color: var(--color-primary);
-  border-width: 3px;
-  box-shadow: var(--shadow-xl);
-  background-color: #ffffff;
+  border: 1.5px solid #ff6b00 !important;
+  box-shadow: 0 0 25px rgba(255, 107, 0, 0.15);
+  background-color: #151820;
 }
 
 .popular-badge {
   position: absolute;
-  top: -14px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--color-primary);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 800;
+  background-color: #ff6b00;
+  color: #000000;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
   padding: 4px 14px;
-  border-radius: 9999px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  white-space: nowrap;
-}
-
-.card-top {
-  margin-bottom: var(--space-6);
-  text-align: left;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
 }
 
 .plan-name {
-  font-size: 1.4rem;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
   font-weight: 800;
+  color: #ffffff;
   margin-bottom: var(--space-1);
 }
 
 .plan-desc {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  min-height: 42px;
+  font-size: 0.88rem;
+  color: #9ca3af;
+  margin-bottom: var(--space-4);
 }
 
-.plan-price-box {
+.plan-pricing {
   display: flex;
   align-items: baseline;
-  gap: var(--space-2);
-  margin: var(--space-4) 0;
+  gap: var(--space-1);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid #1f232d;
 }
 
-.plan-price {
-  font-size: 2.4rem;
+.price-currency {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b00;
+}
+
+.price-amount {
+  font-size: 2.5rem;
   font-weight: 800;
-  color: var(--color-primary-dark);
+  color: #ffffff;
+  line-height: 1;
+  font-family: var(--font-heading);
 }
 
-.plan-period {
-  font-size: 0.95rem;
+.price-period {
+  font-size: 0.88rem;
+  color: #9ca3af;
   font-weight: 600;
-  color: var(--color-text-muted);
 }
 
 .plan-features-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  gap: 12px;
+  margin-bottom: var(--space-6);
   flex-grow: 1;
-  text-align: left;
 }
 
 .plan-feature-item {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #d1d5db;
 }
 
-.plan-feature-item svg {
+.feature-check-icon {
+  color: #ff6b00;
   flex-shrink: 0;
-  margin-top: 3px;
-  color: var(--color-success);
-}
-
-/* Razorpay Compliance Banner */
-.compliance-banner {
-  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
-  border: 2px solid #bfdbfe;
-  border-radius: var(--card-radius);
-  padding: var(--space-6);
-  margin-top: var(--space-12);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  align-items: center;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .compliance-banner {
-    flex-direction: row;
-    text-align: left;
-    justify-content: space-between;
-  }
-}
-
-.compliance-text h3 {
-  font-size: 1.25rem;
-  color: var(--color-primary-dark);
-  margin-bottom: var(--space-1);
-}
-
-.compliance-text p {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-}
-
-/* ROI Shift Calculator */
-.calc-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
-  border-radius: var(--card-radius);
-  padding: var(--space-6);
-  margin-top: var(--space-10);
-}
-
-.calc-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-6);
-  margin-top: var(--space-4);
-}
-
-@media (min-width: 768px) {
-  .calc-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  margin-top: 2px;
 }

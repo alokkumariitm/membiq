@@ -148,8 +148,8 @@ export const DashboardView = ({ setActiveView }) => {
     return (
       <div className="dashboard-view">
         <div className="container" style={{ maxWidth: '640px', margin: '40px auto', textAlign: 'center' }}>
-          <div style={{ backgroundColor: '#ffffff', border: '2px solid #ef4444', borderRadius: '16px', padding: '36px 20px', boxShadow: '0 10px 25px rgba(0,0,0,0.06)' }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: '#fee2e2', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+          <div style={{ backgroundColor: '#13161c', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '16px', padding: '36px 20px', boxShadow: '0 16px 40px rgba(0,0,0,0.6)' }}>
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
               <Lock size={32} />
             </div>
 
@@ -157,19 +157,19 @@ export const DashboardView = ({ setActiveView }) => {
               28-Day Subscription Expired
             </span>
 
-            <h2 style={{ fontSize: '1.6rem', color: '#0f172a', marginBottom: '8px', fontWeight: '800' }}>
+            <h2 style={{ fontSize: '1.6rem', color: '#ffffff', marginBottom: '8px', fontWeight: '800', fontFamily: 'var(--font-heading)' }}>
               Dashboard Access Locked
             </h2>
 
-            <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '24px' }}>
-              Your 28-day SaaS cycle for <strong>{currentUser.libraryName}</strong> has ended.
+            <p style={{ color: '#9ca3af', fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '24px' }}>
+              Your 28-day SaaS cycle for <strong style={{ color: '#ffffff' }}>{currentUser.libraryName}</strong> has ended.
               Renew your subscription to continue managing reading desks and admissions.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button
                 type="button"
-                className="btn-primary-purple-pill"
+                className="btn-primary-action-pill"
                 onClick={() => {
                   setSelectedPlanForPay({ name: 'Pro Growth', price: 199 });
                   setShowPaymentModal(true);
@@ -206,13 +206,13 @@ export const DashboardView = ({ setActiveView }) => {
     <div className="dashboard-view">
       <div className="container" style={{ maxWidth: '820px', margin: '0 auto' }}>
         {/* Top Header Matching Screenshots */}
-        <div className="dash-top-bar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0 18px', borderBottom: '1px solid #f1f5f9', marginBottom: '18px' }}>
+        <div className="dash-top-bar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0 18px', borderBottom: '1px solid #1f232d', marginBottom: '18px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', fontWeight: '800', fontSize: '1.1rem' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#ff6b00', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000000', fontWeight: '800', fontSize: '1.1rem', boxShadow: '0 0 14px rgba(255, 107, 0, 0.45)' }}>
               m
             </div>
             <div>
-              <h1 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
+              <h1 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff', margin: 0, letterSpacing: '-0.02em', textTransform: 'uppercase', fontFamily: 'var(--font-heading)' }}>
                 {libraryName}
               </h1>
               <span style={{ fontSize: '0.74rem', color: '#10b981', fontWeight: '700' }}>
@@ -226,14 +226,14 @@ export const DashboardView = ({ setActiveView }) => {
               type="button"
               className="dash-icon-btn"
               title="Notifications"
-              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#ffffff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b' }}
+              style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#14171e', border: '1px solid #242934', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#9ca3af' }}
             >
               <Bell size={18} />
             </button>
 
             <div
               title={`Logged in as ${currentUser?.name || 'Owner'}`}
-              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#7c3aed', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1rem', cursor: 'default' }}
+              style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#ff6b00', color: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1rem', cursor: 'default', boxShadow: '0 0 12px rgba(255, 107, 0, 0.35)' }}
             >
               {ownerInitial}
             </div>
@@ -242,7 +242,7 @@ export const DashboardView = ({ setActiveView }) => {
               type="button"
               onClick={logoutOwner}
               title="Sign Out"
-              style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#fee2e2', border: '1px solid #fecaca', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#b91c1c' }}
+              style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#f87171' }}
             >
               <LogOut size={16} />
             </button>
@@ -250,7 +250,7 @@ export const DashboardView = ({ setActiveView }) => {
         </div>
 
         {/* Dashboard Sub-Tabs Ribbon (Screenshots 1, 2, 3, 4) */}
-        <div className="dash-subtabs-bar" role="tablist" style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '20px' }}>
+        <div className="dash-subtabs-bar" role="tablist">
           <button
             type="button"
             className={`dash-subtab-btn ${activeSubTab === 'seats' ? 'active' : ''}`}

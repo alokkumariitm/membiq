@@ -1,8 +1,8 @@
 .lang-switcher {
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-bg-alt);
-  border: 2px solid var(--color-border);
+  background-color: #121419;
+  border: 1px solid #222632;
   border-radius: 9999px;
   padding: 3px;
   gap: 2px;
@@ -12,14 +12,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  padding: 6px 14px;
+  min-height: 36px;
+  padding: 4px 12px;
   border-radius: 9999px;
   border: none;
   background: transparent;
-  color: var(--color-text-secondary);
+  color: #9ca3af;
   font-family: var(--font-family);
-  font-size: var(--font-size-sm);
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -27,33 +27,33 @@
 }
 
 .lang-btn:hover {
-  color: var(--color-text-primary);
-  background-color: rgba(0, 0, 0, 0.04);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .lang-btn.active {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  box-shadow: 0 1px 3px rgba(29, 78, 216, 0.3);
+  background-color: #ff6b00;
+  color: #000000;
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.35);
 }
 
-/* Prominent variant for hero / landing page */
+/* Prominent variant */
 .lang-switcher.prominent {
-  background-color: #ffffff;
-  border: 2px solid var(--color-primary-border);
-  box-shadow: var(--shadow-md);
+  background-color: #14171e;
+  border: 1px solid #282d3c;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   padding: 4px;
 }
 
 .lang-switcher.prominent .lang-btn {
-  min-height: 46px;
-  padding: 8px 18px;
-  font-size: var(--font-size-base);
+  min-height: 42px;
+  padding: 6px 16px;
+  font-size: 0.9rem;
 }
 
 .lang-switcher.prominent .lang-btn.active {
-  background-color: var(--color-primary);
-  color: #ffffff;
+  background-color: #ff6b00;
+  color: #000000;
 }
 
 .lang-indicator-icon {

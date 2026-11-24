@@ -1,10 +1,16 @@
+/* ==========================================================================
+   membiQ SaaS - Global Footer (AddreX Luxury Dark Theme)
+   ========================================================================== */
+
 .global-footer {
-  background-color: var(--color-bg-dark);
-  color: #e2e8f0;
-  border-top: 3px solid var(--color-primary);
+  background-color: #07080a;
+  color: #9ca3af;
+  border-top: 1px solid #1f232d;
   margin-top: auto;
-  padding: var(--space-8) 0 var(--space-6);
+  padding: 32px 0 24px;
   font-size: var(--font-size-sm);
+  position: relative;
+  z-index: 10;
 }
 
 .footer-top {
@@ -12,7 +18,7 @@
   flex-direction: column;
   gap: var(--space-6);
   padding-bottom: var(--space-6);
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid #181b22;
 }
 
 @media (min-width: 768px) {
@@ -28,6 +34,7 @@
 }
 
 .footer-brand-title {
+  font-family: var(--font-heading);
   font-size: var(--font-size-xl);
   font-weight: 800;
   color: #ffffff;
@@ -38,7 +45,7 @@
 }
 
 .footer-brand-desc {
-  color: #94a3b8;
+  color: #9ca3af;
   line-height: 1.6;
   margin-bottom: var(--space-3);
 }
@@ -51,6 +58,7 @@
 
 .footer-links-title {
   color: #ffffff;
+  font-family: var(--font-heading);
   font-size: var(--font-size-base);
   font-weight: 700;
   margin-bottom: var(--space-2);
@@ -74,7 +82,7 @@
 .footer-btn-link {
   background: none;
   border: none;
-  color: #cbd5e1;
+  color: #9ca3af;
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -85,16 +93,15 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 .footer-btn-link:hover {
-  color: #60a5fa;
+  color: #ff6b00;
 }
 
-/* Bottom Bar with the two required interactive elements */
+/* Bottom Bar */
 .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -112,51 +119,47 @@
   }
 }
 
-/* 4.a: © All Rights Reserved — membiQ */
-.footer-copyright-btn {
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid #475569;
-  color: #f1f5f9;
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--btn-radius);
+.footer-copyright {
+  color: #6b7280;
+  font-size: 0.82rem;
+}
+
+.footer-interactive-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.privacy-trigger-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.82rem;
+  font-weight: 600;
   cursor: pointer;
+  padding: var(--space-2);
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  transition: all var(--transition-fast);
+  gap: 4px;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
 }
 
-.footer-copyright-btn:hover {
-  background-color: rgba(255, 255, 255, 0.16);
-  border-color: #94a3b8;
-  color: #ffffff;
+.privacy-trigger-btn:hover {
+  color: #ff6b00;
 }
 
-/* 4.b: Powered by AddreX Solution */
-.footer-powered-btn {
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.4), rgba(15, 118, 110, 0.4));
-  border: 1px solid #3b82f6;
-  color: #bfdbfe;
-  font-family: var(--font-family);
-  font-size: var(--font-size-sm);
-  font-weight: 700;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--btn-radius);
-  cursor: pointer;
+.footer-offline-badge {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  transition: all var(--transition-fast);
-}
-
-.footer-powered-btn:hover {
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.7), rgba(15, 118, 110, 0.7));
-  border-color: #60a5fa;
-  color: #ffffff;
-  transform: translateY(-1px);
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #34d399;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
 }

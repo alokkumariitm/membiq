@@ -1,4 +1,7 @@
-/* Auth & Verification Specific Styles */
+/* ==========================================================================
+   membiQ SaaS - Auth & Verification (AddreX Luxury Dark Theme)
+   ========================================================================== */
+
 .otp-container {
   display: flex;
   flex-direction: column;
@@ -11,28 +14,31 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  background-color: rgba(255, 107, 0, 0.15);
+  color: #ff6b00;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-2);
+  box-shadow: 0 0 16px rgba(255, 107, 0, 0.35);
 }
 
 .otp-email-highlight {
   font-weight: 700;
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-alt);
-  padding: 4px 10px;
-  border-radius: 6px;
+  color: #ffffff;
+  background-color: #14171e;
+  padding: 6px 14px;
+  border-radius: 8px;
   display: inline-block;
   margin: 4px 0;
+  border: 1px solid #242934;
+  font-family: var(--font-mono);
 }
 
 .otp-inputs-row {
   display: flex;
   justify-content: center;
-  gap: var(--space-2);
+  gap: 8px;
   margin: var(--space-4) 0;
 }
 
@@ -42,16 +48,16 @@
   font-size: 1.5rem;
   font-weight: 800;
   text-align: center;
-  border: 2px solid var(--color-border);
+  border: 1px solid #282d3c;
   border-radius: var(--btn-radius);
-  background-color: var(--color-bg-card);
-  color: var(--color-text-primary);
+  background-color: #0e1116;
+  color: #ffffff;
   transition: all var(--transition-fast);
 }
 
 .otp-box-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.25);
   outline: none;
 }
 
@@ -64,125 +70,134 @@
   letter-spacing: 0.35em;
   text-align: center;
   min-height: 54px;
-  border: 2px solid var(--color-primary);
+  border: 2px solid #ff6b00;
   border-radius: var(--btn-radius);
+  background-color: #0e1116;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(255, 107, 0, 0.25);
+}
+
+.otp-single-input:focus {
+  outline: none;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.45);
 }
 
 .otp-simulation-badge {
-  background-color: var(--color-warning-bg);
-  border: 1px solid var(--color-warning-border);
+  background-color: #141720;
+  border: 1px solid rgba(255, 107, 0, 0.3);
   border-radius: var(--btn-radius);
-  padding: var(--space-3);
+  padding: 12px 14px;
   margin-top: var(--space-2);
   font-size: var(--font-size-xs);
-  color: var(--color-warning);
+  color: #ff8c3a;
   text-align: left;
 }
 
 .otp-simulation-badge strong {
   display: block;
   font-size: var(--font-size-sm);
-  color: #92400e;
+  color: #ffffff;
+  margin-bottom: 2px;
 }
 
 .otp-resend-btn {
   background: none;
   border: none;
-  color: var(--color-primary);
+  color: #ff6b00;
   font-weight: 700;
   font-size: var(--font-size-sm);
   cursor: pointer;
   text-decoration: underline;
   padding: var(--space-2);
+  transition: all 0.2s;
+}
+
+.otp-resend-btn:hover {
+  color: #ff8c3a;
 }
 
 .otp-resend-btn:disabled {
-  color: var(--color-text-muted);
+  color: #64748b;
   text-decoration: none;
   cursor: not-allowed;
 }
 
-/* Single Device Session Warning Banner */
-.session-lock-banner {
-  background-color: #fef2f2;
-  border: 2px solid #f87171;
-  border-radius: var(--card-radius);
-  padding: var(--space-4) var(--space-6);
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  margin: var(--space-8) auto;
+}
+
+.auth-header {
+  text-align: center;
   margin-bottom: var(--space-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  animation: shake 300ms ease;
 }
 
-@media (min-width: 640px) {
-  .session-lock-banner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+.auth-header h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: var(--space-1);
 }
 
-.session-lock-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #fee2e2;
-  color: #dc2626;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.session-lock-text h4 {
-  color: #991b1b;
-  margin: 0 0 2px 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.session-lock-text p {
-  color: #7f1d1d;
+.auth-header p {
+  color: #9ca3af;
+  font-size: var(--font-size-sm);
   margin: 0;
-  font-size: 0.88rem;
 }
 
-/* Interactive Session Simulator Box */
-.device-tester-card {
-  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
-  border: 2px dashed #93c5fd;
-  border-radius: var(--card-radius);
-  padding: var(--space-4);
-  margin-top: var(--space-4);
-  display: flex;
-  flex-direction: column;
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  background-color: #0e1116;
+  padding: 4px;
+  border-radius: var(--btn-radius);
+  border: 1px solid #1f232d;
 }
 
-@media (min-width: 640px) {
-  .device-tester-card {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.active-device-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #ffffff;
-  padding: 4px 12px;
-  border-radius: 9999px;
-  border: 1px solid var(--color-border);
-  font-size: 0.8rem;
+.auth-tab {
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--btn-radius) - 2px);
+  padding: var(--space-3);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
   font-weight: 700;
-  color: var(--color-primary-dark);
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  min-height: 42px;
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
+.auth-tab.active {
+  background-color: #ff6b00;
+  color: #000000;
+  box-shadow: 0 2px 10px rgba(255, 107, 0, 0.35);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid #1f232d;
+  font-size: var(--font-size-sm);
+  color: #9ca3af;
+}
+
+.auth-link {
+  color: #ff6b00;
+  font-weight: 700;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+  color: #ff8c3a;
 }

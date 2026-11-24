@@ -47,7 +47,7 @@ export const Navbar = ({ activeView, setActiveView }) => {
             <BookOpen size={24} />
           </div>
           <div className="brand-text-group">
-            <span className="brand-title">{t('brand_name')}</span>
+            <span className="brand-title">membi<span className="brand-accent">Q</span></span>
             <span className="brand-sub">Reading Hall SaaS</span>
           </div>
         </button>
