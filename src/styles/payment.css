@@ -4,10 +4,10 @@
 
 .payment-tabs {
   display: flex;
-  background-color: #0e1116;
+  background-color: var(--color-bg-surface);
   padding: 4px;
   border-radius: var(--btn-radius);
-  border: 1px solid #1f232d;
+  border: 1px solid var(--color-border);
   gap: 4px;
   margin-bottom: var(--space-5);
 }
@@ -20,7 +20,7 @@
   font-family: var(--font-family);
   font-size: 0.88rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   border-radius: 8px;
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -31,14 +31,14 @@
 }
 
 .payment-tab-btn.active {
-  background-color: #ff6b00;
-  color: #000000;
-  box-shadow: 0 0 12px rgba(255, 107, 0, 0.4);
+  background: var(--color-primary-gradient);
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
 }
 
 .payment-summary-box {
-  background: #14171f;
-  border: 1px solid rgba(255, 107, 0, 0.3);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-primary-border);
   border-radius: var(--card-radius);
   padding: var(--space-4);
   margin-bottom: var(--space-5);
@@ -59,10 +59,10 @@
   width: 200px;
   height: 200px;
   background-color: #ffffff;
-  border: 2px solid #ff6b00;
+  border: 2px solid var(--color-primary);
   border-radius: var(--card-radius);
   padding: 10px;
-  box-shadow: 0 0 20px rgba(255, 107, 0, 0.25);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.35);
   margin-bottom: var(--space-3);
   display: flex;
   align-items: center;

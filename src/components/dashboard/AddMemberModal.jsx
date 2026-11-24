@@ -67,7 +67,7 @@ export const AddMemberModal = ({
       <div className="modal-dialog" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '520px' }}>
         <div className="modal-header">
           <h3>
-            <UserPlus size={20} color="#ff6b00" />
+            <UserPlus size={20} color="var(--color-primary)" />
             <span>Add New Member</span>
           </h3>
           <button type="button" className="modal-close-btn" onClick={onClose} aria-label="Close">
@@ -182,7 +182,7 @@ export const AddMemberModal = ({
 
             <div style={{ background: '#0e1015', border: '1px solid #1f232d', borderRadius: '10px', padding: '12px', marginTop: '6px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: '0.86rem', color: '#9ca3af' }}>Total Fee Payable:</span>
-              <strong style={{ fontSize: '1.2rem', color: '#ff6b00', fontFamily: 'var(--font-heading)' }}>
+              <strong style={{ fontSize: '1.2rem', color: 'var(--color-primary)', fontFamily: 'var(--font-heading)' }}>
                 ₹{Number(feeRate) * monthsCount}
               </strong>
             </div>

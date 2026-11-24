@@ -39,8 +39,8 @@
 }
 
 .admin-metric-card {
-  background-color: #121419;
-  border: 1px solid #222632;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: 16px;
   display: flex;
@@ -50,19 +50,19 @@
 }
 
 .admin-metric-card:hover {
-  border-color: #3b4252;
-  background-color: #151820;
+  border-color: var(--color-border-strong);
+  background-color: var(--color-bg-card-hover);
 }
 
 .admin-metric-card.highlight {
-  border: 1.5px solid #ff6b00 !important;
-  box-shadow: 0 0 20px rgba(255, 107, 0, 0.15) !important;
+  border: 1.5px solid var(--color-primary) !important;
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.2) !important;
 }
 
 .admin-metric-title {
   font-size: 0.72rem;
   font-weight: 800;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   letter-spacing: 0.05em;
   font-family: var(--font-mono);
 }
@@ -76,9 +76,9 @@
 }
 
 .admin-card {
-  background-color: #121419;
-  border: 1px solid #222632;
-  border-radius: 16px;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-radius);
   padding: 24px;
   margin-bottom: 24px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
@@ -93,7 +93,7 @@
 .admin-table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid #1f232d;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
@@ -105,13 +105,13 @@
 }
 
 .admin-table th {
-  background-color: #0e1014;
-  color: #9ca3af;
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-secondary);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   padding: 12px;
-  border-bottom: 1px solid #1f232d;
+  border-bottom: 1px solid var(--color-border);
   white-space: nowrap;
   font-family: var(--font-mono);
 }

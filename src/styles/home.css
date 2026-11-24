@@ -1,5 +1,6 @@
 /* ==========================================================================
-   membiQ SaaS - Home Portal (AddreX Luxury Theme)
+   membiQ SaaS - Home Portal (Reference Dark Aesthetic & Fire-Orange Theme)
+   Reference: https://alokkumariitm.github.io/membiq_website_code/
    ========================================================================== */
 
 .home-view {
@@ -8,10 +9,10 @@
   align-items: center;
   justify-content: center;
   padding: 32px 16px 48px;
-  background-color: #090a0d;
+  background-color: var(--color-bg-dark);
   background-image: 
-    radial-gradient(circle at 50% 10%, rgba(255, 107, 0, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 10% 80%, rgba(255, 107, 0, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 50% 10%, rgba(249, 115, 22, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 80%, rgba(255, 87, 34, 0.04) 0%, transparent 40%);
   position: relative;
   overflow: hidden;
 }
@@ -50,7 +51,10 @@
 }
 
 .portal-main-title .accent {
-  color: #ff6b00;
+  color: var(--color-primary);
+  background: var(--color-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (min-width: 768px) {
@@ -61,7 +65,7 @@
 
 .portal-sub-text {
   font-size: 1.05rem;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0 0 16px;
   text-align: center;
@@ -107,11 +111,11 @@
 
 .app-auth-col .card,
 .app-auth-col .auth-card {
-  background: #13161c;
-  border: 1px solid #222632;
-  border-radius: 16px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-radius);
   padding: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
   box-sizing: border-box;
 }
 
@@ -134,9 +138,9 @@
 }
 
 .active-session-info {
-  background: #0e1014;
+  background: var(--color-bg-surface);
   border-radius: 10px;
-  border: 1px solid #1f232d;
+  border: 1px solid var(--color-border);
   padding: 14px;
   margin-bottom: 18px;
   font-size: 0.88rem;
@@ -150,10 +154,10 @@
 .auth-mode-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: #0e1015;
+  background: var(--color-bg-surface);
   padding: 4px;
   border-radius: 10px;
-  border: 1px solid #1f232c;
+  border: 1px solid var(--color-border);
   margin-bottom: 20px;
   gap: 4px;
 }
@@ -161,7 +165,7 @@
 .auth-tab-btn {
   background: transparent;
   border: none;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   padding: 10px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -172,10 +176,10 @@
 }
 
 .auth-tab-btn.active {
-  background: #ff6b00;
-  color: #000000;
+  background: var(--color-primary-gradient);
+  color: #ffffff;
   font-weight: 700;
-  box-shadow: 0 2px 10px rgba(255, 107, 0, 0.35);
+  box-shadow: 0 2px 12px rgba(249, 115, 22, 0.4);
 }
 
 /* Mobile responsive inputs and buttons */

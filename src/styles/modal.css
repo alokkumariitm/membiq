@@ -8,9 +8,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,10 +20,10 @@
 }
 
 .modal-dialog {
-  background-color: #121419;
-  border-radius: 16px;
-  border: 1px solid #222632;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 107, 0, 0.08);
+  background-color: var(--color-bg-card);
+  border-radius: var(--modal-radius);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 30px rgba(249, 115, 22, 0.15);
   width: 100%;
   max-width: 620px;
   max-height: 90vh;
@@ -48,8 +48,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid #1f232d;
-  background-color: #0e1014;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
 }
 
 .modal-header h3 {

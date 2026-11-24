@@ -1,8 +1,8 @@
 .lang-switcher {
   display: inline-flex;
   align-items: center;
-  background-color: #121419;
-  border: 1px solid #222632;
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
   border-radius: 9999px;
   padding: 3px;
   gap: 2px;
@@ -17,7 +17,7 @@
   border-radius: 9999px;
   border: none;
   background: transparent;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   font-family: var(--font-family);
   font-size: 0.82rem;
   font-weight: 700;
@@ -32,15 +32,15 @@
 }
 
 .lang-btn.active {
-  background-color: #ff6b00;
-  color: #000000;
-  box-shadow: 0 0 10px rgba(255, 107, 0, 0.35);
+  background: var(--color-primary-gradient);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
 }
 
 /* Prominent variant */
 .lang-switcher.prominent {
-  background-color: #14171e;
-  border: 1px solid #282d3c;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   padding: 4px;
 }
@@ -52,8 +52,8 @@
 }
 
 .lang-switcher.prominent .lang-btn.active {
-  background-color: #ff6b00;
-  color: #000000;
+  background: var(--color-primary-gradient);
+  color: #ffffff;
 }
 
 .lang-indicator-icon {

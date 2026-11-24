@@ -80,7 +80,7 @@ export const Footer = ({
             target="_blank"
             rel="noopener noreferrer"
             className="footer-powered-plain-link"
-            style={{ color: '#ff6b00', fontSize: '0.88rem', fontWeight: '600', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+            style={{ color: 'var(--color-primary)', fontSize: '0.88rem', fontWeight: '600', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
           >
             <span>Powered by AddreX Solution</span>
             <ExternalLink size={14} />

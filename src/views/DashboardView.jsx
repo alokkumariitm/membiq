@@ -234,7 +234,7 @@ export const DashboardView = ({ setActiveView }) => {
 
             <div
               title={`Logged in as ${currentUser?.name || 'Owner'}`}
-              style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#ff6b00', color: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1rem', cursor: 'default', boxShadow: '0 0 12px rgba(255, 107, 0, 0.35)' }}
+              style={{ width: '38px', height: '38px', borderRadius: '50%', background: 'var(--color-primary-gradient)', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '1rem', cursor: 'default', boxShadow: '0 0 14px rgba(249, 115, 22, 0.4)' }}
             >
               {ownerInitial}
             </div>

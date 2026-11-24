@@ -53,13 +53,14 @@
 }
 
 .metric-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: var(--space-4);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .metric-header {
@@ -72,12 +73,13 @@
 .metric-title {
   font-size: 0.85rem;
   font-weight: 700;
+  color: var(--color-text-secondary);
 }
 
 .metric-value {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--color-text-primary);
+  color: #ffffff;
 }
 
 .metric-sub {
@@ -88,14 +90,15 @@
 
 /* Shift Selector Ribbon */
 .shift-ribbon {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: var(--space-4);
   margin-bottom: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 @media (min-width: 768px) {
@@ -116,8 +119,8 @@
   min-height: 44px;
   padding: 8px 16px;
   border-radius: var(--btn-radius);
-  border: 2px solid var(--color-border);
-  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
   color: var(--color-text-secondary);
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
@@ -132,12 +135,14 @@
 .shift-btn:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
+  background-color: var(--color-bg-card-hover);
 }
 
 .shift-btn.active {
-  background-color: var(--color-primary-light);
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
+  background: var(--color-primary-gradient);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(249, 115, 22, 0.35);
 }
 
 /* Dashboard Two-Column Workspace */
@@ -155,10 +160,11 @@
 
 /* Seat Floor Layout */
 .seat-map-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: var(--space-6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .seat-map-top {
@@ -194,7 +200,7 @@
   width: 14px;
   height: 14px;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .ac-zone-header {
@@ -234,8 +240,9 @@
   aspect-ratio: 1;
   min-height: 48px;
   border-radius: 8px;
-  border: 2px solid var(--color-border);
-  background-color: #ffffff;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg-surface);
+  color: #ffffff;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -253,6 +260,7 @@
   transform: scale(1.06);
   z-index: 2;
   box-shadow: var(--shadow-md);
+  border-color: var(--color-border-strong);
 }
 
 .seat-btn.available {
@@ -263,23 +271,24 @@
 
 .seat-btn.occupied {
   background-color: var(--color-bg-alt);
-  border-color: var(--color-border-strong);
+  border-color: var(--color-border);
   color: var(--color-text-muted);
 }
 
 .seat-btn.fixed-type {
-  border-top-width: 5px;
+  border-top-width: 4px;
   border-top-color: var(--color-primary);
 }
 
 .seat-btn.floating-type {
-  border-top-width: 5px;
+  border-top-width: 4px;
   border-top-color: var(--color-warning);
 }
 
 .seat-btn.selected {
-  outline: 3px solid var(--color-primary);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.4);
 }
 
 .seat-ac-dot {
@@ -300,17 +309,19 @@
 }
 
 .checkin-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: var(--space-6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .activity-feed-card {
-  background-color: #ffffff;
-  border: 2px solid var(--color-border);
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: var(--space-6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .feed-list {

@@ -1,63 +1,66 @@
 /* ==========================================================================
-   membiQ SaaS Design Engine - AddreX Luxury Dark & Neon Orange Theme
-   Reference: https://alokkumariitm.github.io/addrex-solution/
+   membiQ SaaS Design Engine - Reference Dark Aesthetic & Fire-Orange Theme
+   Reference: https://alokkumariitm.github.io/membiq_website_code/
    ========================================================================== */
 
 :root {
-  /* Brand Accent Colors (Electric Orange from AddreX Solution) */
-  --color-primary: #ff6b00;
-  --color-primary-dark: #e05e00;
-  --color-primary-light: rgba(255, 107, 0, 0.08);
-  --color-primary-border: rgba(255, 107, 0, 0.3);
-  --color-primary-glow: rgba(255, 107, 0, 0.25);
+  /* Brand Fire-Orange Accent Palette (#ff5722 / #F97316) */
+  --color-primary: #F97316;
+  --color-primary-fire: #FF5722;
+  --color-primary-dark: #EA580C;
+  --color-primary-gradient: linear-gradient(135deg, #FF5722 0%, #F97316 100%);
+  --color-primary-gradient-hover: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  --color-primary-light: rgba(249, 115, 22, 0.1);
+  --color-primary-border: rgba(249, 115, 22, 0.35);
+  --color-primary-glow: rgba(249, 115, 22, 0.25);
 
   --color-secondary: #00d2b4;
   --color-secondary-dark: #00a890;
   --color-secondary-light: rgba(0, 210, 180, 0.1);
 
-  --color-accent: #ff7a00;
-  --color-accent-light: rgba(255, 122, 0, 0.12);
+  --color-accent: #FF5722;
+  --color-accent-light: rgba(255, 87, 34, 0.12);
 
-  /* Deep Luxury Dark Theme Backgrounds */
-  --color-bg-dark: #0a0a0a;
-  --color-bg-main: #0c0d10;
-  --color-bg-surface: #121418;
-  --color-bg-card: #15181e;
-  --color-bg-card-hover: #1a1e26;
-  --color-bg-alt: #161920;
-  --color-bg-input: #0e1014;
+  /* Deep Reference Dark Theme Surfaces (#09090B, #101014, #18181C) */
+  --color-bg-dark: #09090B;
+  --color-bg-main: #09090B;
+  --color-bg-surface: #101014;
+  --color-bg-card: #18181C;
+  --color-bg-card-hover: #1E1E24;
+  --color-bg-alt: #121216;
+  --color-bg-input: #101014;
 
-  /* Typography Colors */
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a0a8b6;
-  --color-text-muted: #6b7280;
-  --color-text-inverse: #0a0a0a;
+  /* Typography Colors (Reference high-contrast white & muted zinc) */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #9CA3AF;
+  --color-text-muted: #6B7280;
+  --color-text-inverse: #09090B;
 
-  /* Crisp Borders */
-  --color-border: #222630;
-  --color-border-strong: #333a48;
-  --color-border-subtle: #191c24;
-  --color-border-accent: #ff6b00;
+  /* Crisp Reference Borders (#27272A, #3F3F46) */
+  --color-border: #27272A;
+  --color-border-strong: #3F3F46;
+  --color-border-subtle: #18181C;
+  --color-border-accent: #F97316;
 
   /* Semantic Status Indicators */
-  --color-success: #10b981;
-  --color-success-bg: rgba(16, 185, 129, 0.1);
-  --color-success-border: rgba(16, 185, 129, 0.3);
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.12);
+  --color-success-border: rgba(16, 185, 129, 0.25);
 
-  --color-warning: #f59e0b;
-  --color-warning-bg: rgba(245, 158, 11, 0.1);
-  --color-warning-border: rgba(245, 158, 11, 0.3);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-warning-border: rgba(245, 158, 11, 0.25);
 
-  --color-danger: #ef4444;
-  --color-danger-bg: rgba(239, 68, 68, 0.1);
-  --color-danger-border: rgba(239, 68, 68, 0.3);
+  --color-danger: #EF4444;
+  --color-danger-bg: rgba(239, 68, 68, 0.12);
+  --color-danger-border: rgba(239, 68, 68, 0.25);
 
   --color-ac-blue: #38bdf8;
   --color-ac-bg: rgba(56, 189, 248, 0.1);
 
-  /* Typography */
-  --font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-heading: 'Sora', 'Plus Jakarta Sans', sans-serif;
+  /* Typography (Plus Jakarta Sans as in reference) */
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
   --font-mono: 'Space Grotesk', monospace;
 
   --font-size-xs: 0.75rem;
@@ -83,17 +86,17 @@
 
   /* Phone Ergonomics & Touch Targets */
   --tap-target-min: 44px;
-  --btn-radius: 10px;
-  --card-radius: 14px;
-  --modal-radius: 16px;
+  --btn-radius: 12px;
+  --card-radius: 16px;
+  --modal-radius: 18px;
 
-  /* High-Tech Glow Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 16px 36px rgba(0, 0, 0, 0.7);
-  --shadow-orange-glow: 0 0 25px rgba(255, 107, 0, 0.2);
-  --shadow-orange-btn: 0 4px 18px rgba(255, 107, 0, 0.35);
+  /* High-Tech Fire Glow Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.7);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.85);
+  --shadow-orange-glow: 0 0 25px rgba(249, 115, 22, 0.25);
+  --shadow-orange-btn: 0 4px 18px rgba(249, 115, 22, 0.4);
 
   /* Transitions */
   --transition-fast: 150ms ease;

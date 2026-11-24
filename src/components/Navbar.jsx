@@ -174,7 +174,7 @@ export const Navbar = ({ activeView, setActiveView }) => {
               <div className="mobile-user-status-card">
                 <div>
                   <div style={{ fontWeight: '700', color: '#ffffff', fontSize: '0.92rem' }}>{currentUser.name}</div>
-                  <div style={{ color: '#ff8c3a', fontSize: '0.8rem' }}>{currentUser.libraryName}</div>
+                  <div style={{ color: 'var(--color-primary)', fontSize: '0.8rem' }}>{currentUser.libraryName}</div>
                 </div>
                 <button
                   type="button"
