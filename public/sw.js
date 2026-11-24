@@ -1,6 +1,6 @@
 // membiQ Service Worker for PWA & Android APK (PWABuilder Compliant)
 
-const CACHE_NAME = 'membiq-pwa-v1';
+const CACHE_NAME = 'membiq-pwa-v4';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

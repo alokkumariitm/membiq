@@ -1,7 +1,7 @@
 .lang-switcher {
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-bg-surface);
+  background-color: #F3F4F6;
   border: 1px solid var(--color-border);
   border-radius: 9999px;
   padding: 3px;
@@ -27,21 +27,21 @@
 }
 
 .lang-btn:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .lang-btn.active {
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   color: #ffffff;
-  box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 2px 8px rgba(121, 86, 232, 0.35);
 }
 
 /* Prominent variant */
 .lang-switcher.prominent {
-  background-color: var(--color-bg-card);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-border);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-sm);
   padding: 4px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .lang-switcher.prominent .lang-btn.active {
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   color: #ffffff;
 }
 

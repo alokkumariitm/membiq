@@ -12,17 +12,14 @@ html {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg-dark);
+  background-color: var(--color-bg-main);
   color: var(--color-text-primary);
   line-height: 1.6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 85% 50%, rgba(255, 87, 34, 0.04) 0%, transparent 50%);
-  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
@@ -36,19 +33,6 @@ body {
   width: 100%;
 }
 
-/* Ambient glow container */
-.bg-glow-effect {
-  position: absolute;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* Accessibility focus ring */
 :focus-visible {
   outline: 2px solid var(--color-primary);
@@ -58,7 +42,7 @@ body {
 /* Container */
 .container {
   width: 100%;
-  max-width: 1240px;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: var(--space-4);
@@ -72,9 +56,9 @@ body {
   }
 }
 
-/* Base Headings - Sora Font */
+/* Headings - Plus Jakarta Sans */
 h1, h2, h3, h4, h5, h6 {
-  color: #ffffff;
+  color: var(--color-text-primary);
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.25;
@@ -113,17 +97,17 @@ p {
   color: var(--color-primary);
 }
 
-/* Buttons - Responsive, High Contrast, Luxury Glow */
+/* Buttons - Matching membiq_website_code .btn-primary */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   min-height: var(--tap-target-min);
-  padding: 11px 22px;
+  padding: 10px 20px;
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   border-radius: var(--btn-radius);
   border: 1px solid transparent;
@@ -138,37 +122,36 @@ p {
   transform: scale(0.98);
 }
 
-/* Solid Fire-Orange (Reference Brand Button) */
+/* Royal Purple Button (.btn-primary from reference) */
 .btn-primary {
-  background: var(--color-primary-gradient);
-  color: #ffffff;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
   border-color: transparent;
-  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.35);
+  box-shadow: 0 4px 14px rgba(121, 86, 232, 0.3);
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-gradient-hover);
+  background-color: var(--color-primary-hover);
   border-color: transparent;
-  box-shadow: 0 6px 24px rgba(249, 115, 22, 0.55);
+  box-shadow: 0 6px 20px rgba(121, 86, 232, 0.45);
   transform: translateY(-1px);
-  filter: brightness(1.06);
 }
 
 .btn-secondary {
-  background-color: var(--color-bg-card);
-  color: #ffffff;
-  border-color: var(--color-border);
+  background-color: #FFFFFF;
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-bg-card-hover);
+  background-color: var(--color-bg-alt);
   border-color: var(--color-border-strong);
-  color: #ffffff;
+  color: var(--color-text-primary);
 }
 
 .btn-accent {
   background-color: var(--color-secondary);
-  color: #000000;
+  color: #FFFFFF;
   border-color: var(--color-secondary);
   box-shadow: 0 4px 12px rgba(0, 210, 180, 0.25);
 }
@@ -184,9 +167,9 @@ p {
 }
 
 .btn-outline:hover {
-  background-color: rgba(249, 115, 22, 0.1);
+  background-color: var(--color-primary-light);
   border-color: var(--color-primary);
-  box-shadow: 0 0 16px rgba(249, 115, 22, 0.25);
+  box-shadow: 0 0 16px rgba(121, 86, 232, 0.2);
 }
 
 .btn-sm {
@@ -213,7 +196,7 @@ p {
   }
 }
 
-/* Form Controls - Reference Dark Inputs */
+/* Form Controls - Clean Light Modern Inputs */
 .form-group {
   margin-bottom: var(--space-4);
   display: flex;
@@ -225,7 +208,7 @@ p {
 .form-label {
   font-weight: 600;
   font-size: 0.84rem;
-  color: #d1d5db;
+  color: var(--color-text-primary);
 }
 
 .form-input, .form-select {
@@ -236,21 +219,21 @@ p {
   border-radius: var(--btn-radius);
   font-family: var(--font-family);
   font-size: 0.92rem;
-  color: #ffffff;
-  background-color: var(--color-bg-input);
+  color: var(--color-text-primary);
+  background-color: #FFFFFF;
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .form-input:focus, .form-select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.18);
-  background-color: #121217;
+  box-shadow: 0 0 0 3px rgba(121, 86, 232, 0.15);
+  background-color: #FFFFFF;
   outline: none;
 }
 
 .form-input::placeholder {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 /* Badges */
@@ -267,28 +250,28 @@ p {
   letter-spacing: 0.05em;
 }
 
-.badge-blue, .badge-orange {
-  background-color: rgba(249, 115, 22, 0.12);
-  color: #F97316;
-  border: 1px solid rgba(249, 115, 22, 0.25);
+.badge-blue, .badge-orange, .badge-purple {
+  background-color: rgba(121, 86, 232, 0.1);
+  color: var(--color-primary);
+  border: 1px solid rgba(121, 86, 232, 0.25);
 }
 
 .badge-green {
   background-color: var(--color-success-bg);
-  color: #34d399;
+  color: var(--color-success);
   border: 1px solid var(--color-success-border);
 }
 
 .badge-amber {
   background-color: var(--color-warning-bg);
-  color: #fbbf24;
+  color: #B45309;
   border: 1px solid var(--color-warning-border);
 }
 
 .badge-ac {
   background-color: var(--color-ac-bg);
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--color-ac-blue);
+  border: 1px solid rgba(2, 132, 199, 0.25);
 }
 
 /* Card base */

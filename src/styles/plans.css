@@ -1,5 +1,5 @@
 /* ==========================================================================
-   membiQ SaaS - Subscription Plans View (AddreX Luxury Dark Theme)
+   membiQ SaaS - Subscription Plans View (Clean Light & Royal Purple Theme)
    ========================================================================== */
 
 .plans-view {
@@ -16,7 +16,7 @@
   font-family: var(--font-heading);
   font-size: var(--font-size-3xl);
   font-weight: 800;
-  color: #ffffff;
+  color: var(--color-text-primary);
   margin-bottom: var(--space-3);
 }
 
@@ -29,7 +29,7 @@
 .plans-billing-toggle {
   display: inline-flex;
   align-items: center;
-  background-color: var(--color-bg-surface);
+  background-color: #F3F4F6;
   padding: 4px;
   border-radius: 9999px;
   border: 1px solid var(--color-border);
@@ -55,9 +55,9 @@
 }
 
 .billing-toggle-btn.active {
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   color: #ffffff;
-  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 2px 10px rgba(121, 86, 232, 0.35);
 }
 
 .plans-grid {
@@ -75,7 +75,7 @@
 }
 
 .pricing-card {
-  background-color: var(--color-bg-card);
+  background-color: #FFFFFF;
   border: 1px solid var(--color-border);
   border-radius: var(--card-radius);
   padding: 35px 24px;
@@ -83,19 +83,19 @@
   flex-direction: column;
   position: relative;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-sm);
 }
 
 .pricing-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.7);
+  box-shadow: var(--shadow-md);
   border-color: var(--color-border-strong);
 }
 
 .pricing-card.featured {
-  border: 1.5px solid var(--color-primary) !important;
-  box-shadow: 0 0 25px rgba(249, 115, 22, 0.25);
-  background-color: var(--color-bg-card-hover);
+  border: 2px solid var(--color-primary) !important;
+  box-shadow: 0 8px 30px rgba(121, 86, 232, 0.15);
+  background-color: #FFFFFF;
 }
 
 .popular-badge {
@@ -103,7 +103,7 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--color-primary-gradient);
+  background: var(--color-primary);
   color: #ffffff;
   font-family: var(--font-mono);
   font-weight: 700;
@@ -111,14 +111,14 @@
   padding: 4px 14px;
   border-radius: 6px;
   letter-spacing: 0.5px;
-  box-shadow: 0 0 14px rgba(249, 115, 22, 0.4);
+  box-shadow: 0 2px 8px rgba(121, 86, 232, 0.35);
 }
 
 .plan-name {
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--color-text-primary);
   margin-bottom: var(--space-1);
 }
 
@@ -146,14 +146,14 @@
 .price-amount {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--color-text-primary);
   line-height: 1;
   font-family: var(--font-heading);
 }
 
 .price-period {
   font-size: 0.88rem;
-  color: #9ca3af;
+  color: var(--color-text-secondary);
   font-weight: 600;
 }
 
@@ -171,7 +171,7 @@
   align-items: flex-start;
   gap: 10px;
   font-size: 0.9rem;
-  color: #d1d5db;
+  color: #374151;
 }
 
 .feature-check-icon {

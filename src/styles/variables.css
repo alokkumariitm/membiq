@@ -1,62 +1,63 @@
 /* ==========================================================================
-   membiQ SaaS Design Engine - Reference Dark Aesthetic & Fire-Orange Theme
+   membiQ SaaS Design Engine - Official Reference Theme (Purple & Clean Light SaaS)
    Reference: https://alokkumariitm.github.io/membiq_website_code/
    ========================================================================== */
 
 :root {
-  /* Brand Fire-Orange Accent Palette (#ff5722 / #F97316) */
-  --color-primary: #F97316;
-  --color-primary-fire: #FF5722;
-  --color-primary-dark: #EA580C;
-  --color-primary-gradient: linear-gradient(135deg, #FF5722 0%, #F97316 100%);
-  --color-primary-gradient-hover: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
-  --color-primary-light: rgba(249, 115, 22, 0.1);
-  --color-primary-border: rgba(249, 115, 22, 0.35);
-  --color-primary-glow: rgba(249, 115, 22, 0.25);
+  /* Brand Primary Royal Purple Palette (#7956E8 / #6843db) from membiq_website_code */
+  --color-primary: #7956E8;
+  --color-primary-hover: #6843db;
+  --color-primary-dark: #5c38cc;
+  --color-primary-gradient: linear-gradient(135deg, #7956E8 0%, #906ffa 100%);
+  --color-primary-gradient-hover: linear-gradient(135deg, #6843db 0%, #7956E8 100%);
+  --color-primary-light: rgba(121, 86, 232, 0.08);
+  --color-primary-border: rgba(121, 86, 232, 0.25);
+  --color-primary-glow: rgba(121, 86, 232, 0.25);
 
   --color-secondary: #00d2b4;
   --color-secondary-dark: #00a890;
   --color-secondary-light: rgba(0, 210, 180, 0.1);
 
-  --color-accent: #FF5722;
-  --color-accent-light: rgba(255, 87, 34, 0.12);
+  --color-accent: #7956E8;
+  --color-accent-light: rgba(121, 86, 232, 0.1);
 
-  /* Deep Reference Dark Theme Surfaces (#09090B, #101014, #18181C) */
-  --color-bg-dark: #09090B;
-  --color-bg-main: #09090B;
-  --color-bg-surface: #101014;
-  --color-bg-card: #18181C;
-  --color-bg-card-hover: #1E1E24;
-  --color-bg-alt: #121216;
-  --color-bg-input: #101014;
+  /* Clean Modern Light SaaS Surfaces from membiq_website_code */
+  --color-bg-light: #F7F7FA;
+  --color-bg-dark: #101014;
+  --color-bg-main: #F7F7FA;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-bg-card-hover: #F9FAFB;
+  --color-bg-alt: #F3F4F6;
+  --color-bg-input: #FFFFFF;
 
-  /* Typography Colors (Reference high-contrast white & muted zinc) */
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #9CA3AF;
-  --color-text-muted: #6B7280;
-  --color-text-inverse: #09090B;
+  /* Typography Colors (from membiq_website_code: --dark: #101014, --gray-text: #6B7280) */
+  --color-text-primary: #101014;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #FFFFFF;
 
-  /* Crisp Reference Borders (#27272A, #3F3F46) */
-  --color-border: #27272A;
-  --color-border-strong: #3F3F46;
-  --color-border-subtle: #18181C;
-  --color-border-accent: #F97316;
+  /* Crisp Subtle Borders from membiq_website_code: --border-color: #E5E7EB */
+  --color-border: #E5E7EB;
+  --color-border-strong: #D1D5DB;
+  --color-border-subtle: #F3F4F6;
+  --color-border-accent: #7956E8;
 
   /* Semantic Status Indicators */
   --color-success: #10B981;
-  --color-success-bg: rgba(16, 185, 129, 0.12);
-  --color-success-border: rgba(16, 185, 129, 0.25);
+  --color-success-bg: #D1FAE5;
+  --color-success-border: #A7F3D0;
 
   --color-warning: #F59E0B;
-  --color-warning-bg: rgba(245, 158, 11, 0.12);
-  --color-warning-border: rgba(245, 158, 11, 0.25);
+  --color-warning-bg: #FEF3C7;
+  --color-warning-border: #FDE68A;
 
   --color-danger: #EF4444;
-  --color-danger-bg: rgba(239, 68, 68, 0.12);
-  --color-danger-border: rgba(239, 68, 68, 0.25);
+  --color-danger-bg: #FEE2E2;
+  --color-danger-border: #FECACA;
 
-  --color-ac-blue: #38bdf8;
-  --color-ac-bg: rgba(56, 189, 248, 0.1);
+  --color-ac-blue: #0284c7;
+  --color-ac-bg: #E0F2FE;
 
   /* Typography (Plus Jakarta Sans as in reference) */
   --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -88,15 +89,15 @@
   --tap-target-min: 44px;
   --btn-radius: 12px;
   --card-radius: 16px;
-  --modal-radius: 18px;
+  --modal-radius: 20px;
 
-  /* High-Tech Fire Glow Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.6);
-  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.7);
-  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.85);
-  --shadow-orange-glow: 0 0 25px rgba(249, 115, 22, 0.25);
-  --shadow-orange-btn: 0 4px 18px rgba(249, 115, 22, 0.4);
+  /* Soft Clean Modern Shadows (from membiq_website_code) */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --shadow-purple-btn: 0 4px 14px rgba(121, 86, 232, 0.3);
+  --shadow-purple-glow: 0 0 25px rgba(121, 86, 232, 0.2);
 
   /* Transitions */
   --transition-fast: 150ms ease;
